@@ -42,7 +42,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 
 app.post('/applist', function(req, res)	 {
-	var query = client.query("SELECT 'nombre' FROM 'usuario' WHERE 'contra' = $1",  [req.body.password]);
+	var query = client.query("SELECT 'nombre' FROM 'Usuario' WHERE 'contra' = $1",  [req.body.password]);
 	console.log(query.toString());
 	query.on('row', function(row) {
     	console.log('user "%s"', row.nombre);
