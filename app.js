@@ -8,10 +8,12 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
-var open = require('open');  
+var open = require('open'); 
+var users = require('./routes/users');
 var assert = require('assert');
 var app = express();
 var pg = require('pg');
+var nano = require('nano')('http://localhost:5984')
 
 var client = new pg.Client("postgres://postgres:tistisquare@localhost/testdb");
 client.connect();
@@ -40,6 +42,7 @@ app.get('/applist', routes.apps);
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+/*
 app.post('/applist', function(req, res)	 {
 	var query = client.query("SELECT 'nombre' FROM 'usuario' WHERE 'contra' = $1",  [req.body.password]);
 	console.log(query.toString());
@@ -47,6 +50,18 @@ app.post('/applist', function(req, res)	 {
     	console.log('user "%s"', row.nombre);
  	});
 	res.render('applist', {title: 'Welcome, ' + req.body.username });
+});
+*/
+
+app.post('/applist',function(req,res) {
+  users.authenticate(req.body.username, req.body.password,function(user) {
+    if(user) { 
+      res.session.user = user;   
+      res.render('/applist');
+    }
+    } else { 
+      res.redirect('/');
+  }
 });
 
 http.createServer(app).listen(app.get('port'), function(){

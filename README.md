@@ -22,16 +22,19 @@ As mentioned before, the project will be based in node.js.
 - Socket.io
 - Express
 - CommonJS
-- Redis
-- PostgreSQL
+- CouchDB¹
+- PostgreSQL¹
 - Twitter Bootstrap
 
+¹Doubting between these two.
+
 ##Usage
-The usage of this application is simple. At this moment the needed command (no DB support yet) is
-```bash
-node app
-```
-Next, open your preferred browser and go to `http://localhost:3000`
+The usage of this application is simple. At this moment the needed command (no DB support yet) is `node`
+
+Next, your default browser will open in `http://localhost:3000`
+
+##See it in action:
+This app can soon will be up and running in the [heroku platform](http://appgenerator.herokuapp.com/). No release dates yet, the project is initial phase.
 
 ***
 
