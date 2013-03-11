@@ -8,11 +8,10 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
-var open = require('open'); 
-var users = require('./routes/users');
+var open = require('open');
 var assert = require('assert');
 var app = express();
-var nano = require('nano')('http://localhost:5984')
+var parseXlsx = require('excel');
 
 var pg = require('pg')
   , connectionString = process.env.DATABASE_URL || 'postgres://postgres:tistisquare@localhost/testdb';
@@ -44,7 +43,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 
 
-app.post('/applist', function(req, res)	 {
+app.post('/applist', function(req, res){
 	var query = client.query('SELECT "Name" FROM "User" WHERE "Pass" = $1',  [req.body.password]);
 	console.log(query.toString());
 	query.on('row', function(row) {
@@ -54,18 +53,21 @@ app.post('/applist', function(req, res)	 {
 
 });
 
-/*
-app.post('/applist',function(req,res) {
-  users.authenticate(req.body.username, req.body.password,function(user) {
-    if(user) { 
-      res.session.user = user;   
-      res.render('/applist');
-    } else { 
-      res.redirect('/');
-    }
-  });
+app.post('/login', function(req, res){
+	if (req.body.password != req.body.password_confirm) 
+	    res.redirect('register');
+	else {
+	  var query = client.query('INSERT INTO "User" ("Name", "Pass", email) VALUES ($1, $2, $3)', [req.body.username, req.body.password, req.body.email], function(err) {
+	    if (err) {
+	      res.redirect('register');
+	      console.log('Username or mail already taken');
+	    }
+	    else {
+	      res.render('index', {title: 'Log in'});
+	    }
+	  });
+	}
 });
-*/
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
