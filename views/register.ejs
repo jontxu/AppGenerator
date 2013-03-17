@@ -7,11 +7,52 @@
 	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
+   <script type='text/javascript' src="/javascripts/jquery-1.9.1.min.js"/>
+    <script type='text/javascript' src="/javascripts/jquery.validate.js"/>
+   <script>
+   $("#signupform").validate({
+		rules: {
+			username: {
+				required: true,
+				minlength: 2
+			},
+			password: {
+				required: true,
+				minlength: 5
+			},
+			password_confirm: {
+				required: true,
+				minlength: 5,
+				equalTo: "#password"
+			},
+			email: {
+				required: true,
+				email: true
+			}
+		},
+		messages: {
+			username: {
+				required: "Please enter a username",
+				minlength: "Your username must consist of at least 2 characters"
+			},
+			password: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 5 characters long"
+			},
+			password_confirm: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 5 characters long",
+				equalTo: "Please enter the same password as above"
+			},
+			email: "Please enter a valid email address"
+		}
+	});
+  </script>
   </head>
   <body>
   <div class="span4"></div>
   <div class="span4">
- <form class="form-horizontal" action='login' method="POST">
+ <form class="form-horizontal" id='signupform' action='signup' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Register</legend>
@@ -20,7 +61,7 @@
       <!-- Username -->
       <label class="control-label"  for="username">Username</label>
       <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+        <input type="text" id="username" name="username" placeholder="" class="required input-xlarge">
         <p class="help-block">Username can contain any letters or numbers, without spaces</p>
       </div>
     </div>
@@ -29,7 +70,7 @@
       <!-- E-mail -->
       <label class="control-label" for="email">E-mail</label>
       <div class="controls">
-        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+        <input type="text" id="email" name="email" placeholder="" class="required input-xlarge">
         <p class="help-block">Please provide your E-mail</p>
       </div>
     </div>
@@ -38,7 +79,7 @@
       <!-- Password-->
       <label class="control-label" for="password">Password</label>
       <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+        <input type="password" id="password" name="password" placeholder="" class="required input-xlarge">
         <p class="help-block">Password should be at least 4 characters</p>
       </div>
     </div>
@@ -47,7 +88,7 @@
       <!-- Password -->
       <label class="control-label"  for="password_confirm">Password (Confirm)</label>
       <div class="controls">
-        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="required input-xlarge">
         <p class="help-block">Please confirm password</p>
       </div>
     </div>

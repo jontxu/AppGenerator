@@ -4,6 +4,6 @@
  */
 
 exports.get = function(req, res){
-  res.render('applist', { title: 'Applist' });
+  res.render('applist', { title: 'My apps & events'});
 };
 

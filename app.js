@@ -13,6 +13,7 @@ var assert = require('assert');
 var app = express();
 var parseXlsx = require('excel');
 
+var usersdb = require('./db/users');
 var pg = require('pg')
   , connectionString = process.env.DATABASE_URL || 'postgres://postgres:tistisquare@localhost/testdb';
 var client = new pg.Client(connectionString);
@@ -37,36 +38,52 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.get('/admin', routes.admin);
 app.get('/register', routes.reg);
 app.get('/applist', routes.apps);
 app.get('/', routes.index);
 app.get('/users', user.list);
 
 
-app.post('/applist', function(req, res){
-	var query = client.query('SELECT "Name" FROM "User" WHERE "Pass" = $1',  [req.body.password]);
-	console.log(query.toString());
-	query.on('row', function(row) {
-	  console.log('user "%s"', row.name);
-	  res.render('applist', {title: 'Welcome, ' + req.body.username });
- 	});
-
+app.post('/login', function(req, res) {
+	var urows = usersdb.getusers();
+	usersdb.authenticate(req.body.username, req.body.password, function(is_admin) {
+    	if (is_admin == null) {
+    		res.redirect("/");
+    	} else if (is_admin == false) {
+      		console.log(!is_admin);
+      		res.method = 'GET';
+      		res.render('applist', {title: 'My apps & events'});
+    	} else if (is_admin == true) {
+    		//var urows = usersdb.getusers();
+    		if (urows == []) {
+    			res.redirect("/");
+    		} else {
+    			console.log("User rows: " + urows);
+				res.method = 'GET';
+				res.render('admin', {title: 'Test', rows: urows});    				
+    		}
+      	}
+	});
 });
 
-app.post('/login', function(req, res){
-	if (req.body.password != req.body.password_confirm) 
+app.post('/signup', function(req, res){
+	if (req.body.password != req.body.password_confirm) {
+	    console.log('Passwords don\'t match');
 	    res.redirect('register');
+	}
 	else {
-	  var query = client.query('INSERT INTO "User" ("Name", "Pass", email) VALUES ($1, $2, $3)', [req.body.username, req.body.password, req.body.email], function(err) {
-	    if (err) {
+	   usersdb.signup(req.body.username, req.body.password, req.body.email, function(user) {
+	    if (user) {
 	      res.redirect('register');
 	      console.log('Username or mail already taken');
 	    }
-	    else {
-	      res.render('index', {title: 'Log in'});
+	    else if (user == null) {
+	      res.redirect('/');
 	    }
-	  });
+	   });
 	}
+	   
 });
 
 http.createServer(app).listen(app.get('port'), function(){
