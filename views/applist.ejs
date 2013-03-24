@@ -4,56 +4,43 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
-	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
-	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
   </head>
-  <body>
+  <body>	
   <div class="span4"></div>
   <div class="span4">
-<table class="table table-striped table-condensed">
+  <p class="lead">Your app list, <%= username %></p>
+  <table class="table table-striped">
 	  <thead>
       <tr>
-          <th>Username</th>
-          <th>Date registered</th>
-          <th>Role</th>
-          <th>Status</th>                                          
+          <th style="width: 200px;">Event</th>
+          <th style="width: 200px;">Description</th>
+          <th style="width: 200px;">Start Date</th>
+          <th style="width: 200px;">End date</th>
+          <th style="width: 200px;">Location</th>
+          <th style="width: 200px;">Actions</th>
       </tr>
   </thead>   
   <tbody>
-    <tr>
-        <td>Donna R. Folse</td>
-        <td>2012/05/06</td>
-        <td>Editor</td>
-        <td><span class="label label-success">Active</span>
-        </td>                                       
-    </tr>
-    <tr>
-        <td>Emily F. Burns</td>
-        <td>2011/12/01</td>
-        <td>Staff</td>
-        <td><span class="label label-important">Banned</span></td>                                       
-    </tr>
-    <tr>
-        <td>Andrew A. Stout</td>
-        <td>2010/08/21</td>
-        <td>User</td>
-        <td><span class="label">Inactive</span></td>                                        
-    </tr>
-    <tr>
-        <td>Mary M. Bryan</td>
-        <td>2009/04/11</td>
-        <td>Editor</td>
-        <td><span class="label label-warning">Pending</span></td>                                       
-    </tr>
-    <tr>
-        <td>Mary A. Lewis</td>
-        <td>2007/02/01</td>
-        <td>Staff</td>
-        <td><span class="label label-success">Active</span></td>                                        
-    </tr>                                   
+  	 <% for(var i=0; i < events.length; i++) { %>
+     <tr>
+        <td style="width: 36px;"><%= events[i].ename %></td>
+        <td style="width: 200px;"><%= events[i].descr %></td>
+        <td style="width: 200px;"><%= events[i].sdate %></td>
+        <td style="width: 200px;"><%= events[i].edate %></td>
+        <td style="width: 200px;"><%= events[i].location %></td>
+        <td style="width: 200px;"><span class="label label-success">Active</span></td>
+        <td style="width: 200px;">
+        	<a href=""><i class="icon-pencil"></i></a> <a href="" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+        </td>
+     </tr> 
+    <% } %>
   </tbody>
 </table>
+<div class="btn-toolbar">
+    <a href=""><button class="btn btn-primary" href="/register">New Event</button></a>
+</div>
+</div>
 </div>
   </body>
 </html>
