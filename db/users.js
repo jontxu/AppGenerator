@@ -28,7 +28,7 @@ module.exports.authenticate = function(username, password, callback) {
 }
 
 module.exports.signup = function(name, pass, email, callback) {
-	var query = client.query('INSERT INTO users (uname, upass, email) VALUES ($1, $2, $3)', [name, pass, email], function(err) {
+	var query = client.query('INSERT INTO users (uname, upass, email, is_admin) VALUES ($1, $2, $3, false)', [name, pass, email], function(err) {
   	if (err) {
     	callback(err);
     	return;
@@ -41,11 +41,54 @@ module.exports.signup = function(name, pass, email, callback) {
 
 module.exports.getusers = function(callback) {
     var rows = [];
-    var query = client.query('SELECT uname, upass, email FROM users');
+    var query = client.query('SELECT uname, upass, email FROM users WHERE is_admin = FALSE');
     query.on('row', function(row) {
 		rows.push(row);
     });
   	query.on('end', function(result) {
      callback(rows);
   });
+}
+
+module.exports.getuser = function(name, callback) {
+    var rows = [];
+    var query = client.query('SELECT uname, upass, email FROM users WHERE is_admin = FALSE and uname = $1', [name]);
+    query.on('row', function(row) {
+		rows.push(row);
+    });
+  	query.on('end', function(result) {
+     callback(rows);
+  });
+}
+
+module.exports.update = function(name, fieldnames, fieldvalues, callback) {
+	var sqlquery = 'UPDATE user SET ';
+	for (var i = 0; i < fieldnames.length; i++) {
+		query = query + fieldnames[i] + '=' + fieldvalues[i];
+		if (i != fieldnames.length) 
+			query += ', ';
+	}
+	query += 'WHERE ename =' + name;
+	var query = client.query(sqlquery, function(err) {
+		if (err) {
+			callback(err);
+			return;
+		} else {
+			callback(null);
+			return;
+		}
+	});
+}
+
+module.exports.delete = function(name, callback) {
+	var rows = [];
+	var query = client.query('DELETE FROM users WHERE uname = $1', [name], function(err) {
+		if (err) {
+			callback(err);
+			return;
+		} else {
+			callback(null);
+			return;
+		}
+	});
 }

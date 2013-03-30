@@ -28,7 +28,8 @@ module.exports.getuserevents = function(username, callback) {
 
 
 module.exports.insert = function(name, desc, startdate, enddate, location, username, callback) {
-	var query = client.query('INSERT INTO events (ename, desc, sdate, edate, location, uname) VALUES ($1, $2, $3, $4, $5, $6)', [name, desc, startdate, enddate, location, username], function(err) {
+	var query = client.query('INSERT INTO events (ename, desc, sdate, edate, location, uname) VALUES ($1, $2, $3, $4, $5, $6)',
+	[name, desc, startdate, enddate, location, username], function(err) {
 		if (err) {
 			callback(err);
 			return;
@@ -38,7 +39,6 @@ module.exports.insert = function(name, desc, startdate, enddate, location, usern
 		}
 	});
 }
-
 module.exports.update = function(name, fieldnames, fieldvalues, callback) {
 	var sqlquery = 'UPDATE events SET ';
 	for (var i = 0; i < fieldnames.length; i++) {

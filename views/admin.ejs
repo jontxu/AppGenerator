@@ -28,14 +28,14 @@
         <td><%= rows[i].email %></td>
         <td><span class="label label-success">Active</span></td>
         <td>
-        	<a href=""><i class="icon-pencil"></i></a> <a href="" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+        	<a href="/user/edit/<%=rows[i].uname %>"><i class="icon-pencil"></i></a> <a href="/user/delete/<%=rows[i].uname %>" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
         </td>
      </tr> 
     <% } %>
   </tbody>
 </table>
 <div class="btn-toolbar">
-    <a href=""><button class="btn btn-primary" href="/register">New User</button></a>
+    <a class="btn btn-primary" href="/register">New User</a>
 </div>
 </div>
 </div>
