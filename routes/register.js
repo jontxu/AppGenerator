@@ -4,6 +4,6 @@
  */
 
 exports.get = function(req, res){
-  res.render('register', { title: 'Sign up' });
+  res.render('register', { title: 'Sign up', formerror: false});
 };
 

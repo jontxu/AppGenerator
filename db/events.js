@@ -15,6 +15,17 @@ module.exports.getallevents = function(callback) {
 	});
 }
 
+module.exports.getevent = function(username, eventname, callback) {
+	var rows = [];
+	var query = client.query('SELECT ename, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1 and ename = $2', [username, eventname]);
+	query.on('row', function(row) {
+		rows.push(row);
+	});
+	query.on('end', function(result) {
+		callback(rows);
+	});
+}
+
 module.exports.getuserevents = function(username, callback) {
 	var rows = [];
 	var query = client.query('SELECT ename, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1', [username]);
@@ -58,9 +69,9 @@ module.exports.update = function(name, fieldnames, fieldvalues, callback) {
 	});
 }
 
-module.exports.delete = function(name, callback) {
+module.exports.delete = function(name, username, callback) {
 	var rows = [];
-	var query = client.query('DELETE FROM events WHERE ename = $1, [name]', function(err) {
+	var query = client.query('DELETE FROM events WHERE ename = $1 and uname = $2', [name, username], function(err) {
 		if (err) {
 			callback(err);
 			return;
