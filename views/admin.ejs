@@ -2,44 +2,49 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
-	<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
-	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
+    <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js') %>
+    <%- renderScriptsTags(scripts) %>
   </head>
   <body>
-  <div class="span4"></div>
-  <div class="span4">
-  <p class="lead">Admin panel</p>
-  <table class="table table-striped table-condensed">
-	  <thead>
-      <tr>
-          <th>User</th>
-          <th>Name</th>
-          <th>Organization</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th style="width: 36px;">Actions</th>
-      </tr>
-  </thead>   
-  <tbody>
-  	 <% for(var i=0; i < rows.length; i++) { %>
-     <tr>
-        <td><%= rows[i].uname %></td>
-        <td><%= rows[i].realname %></td>
-        <td><%= rows[i].org %></td>
-        <td><%= rows[i].email %></td>
-        <td><span class="label label-success">Active</span></td>
-        <td>
-        	<a href="/user/edit/<%=rows[i].uname %>"><i class="icon-pencil"></i></a> <a href="/user/delete/<%=rows[i].uname %>" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-        </td>
-     </tr> 
-    <% } %>
-  </tbody>
-</table>
-<div class="btn-toolbar">
-    <a class="btn btn-primary" href="/register">New User</a>
+  <div class="span3"></div>
+  <div class="span6">
+      <div id="legend">
+        <legend>Admin panel</legend>
+      </div>
+      <!--<p class="lead">Admin panel</p>-->
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th class="span2">User</th>
+            <th class="span2">Name</th>
+            <th class="span6">Organization</th>
+            <th width="span2">Email</th>
+            <th class="span2">Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+  	     <% for(var i=0; i < rows.length; i++) { %>
+          <tr>
+            <td class="span2"><%= rows[i].uname %></td>
+            <td class="span2"><%= rows[i].realname %></td>
+            <td class="span6"><%= rows[i].org %></td>
+            <td width="span2"><%= rows[i].email %></td>
+            <td class="span2"><span class="label label-success">Active</span></td>
+            <td>
+          	 <a href="/user/edit/<%=rows[i].uname %>"><i class="icon-pencil"></i></a>
+              <a href="/user/delete/<%=rows[i].uname %>" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+            </td>
+          </tr> 
+        <% } %>
+        </tbody>
+      </table>
+      <div class="btn-toolbar">
+        <a class="btn btn-primary" href="/register/">New User</a>
+      </div>
 </div>
-</div>
-</div>
-  </body>
+</body>
 </html>

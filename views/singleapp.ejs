@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
+  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js') %>
+  <%- renderScriptsTags(scripts) %>
+  </head>
+  <body>
+  <div class="span3"></div>
+  <div id="main-container" class="container">
+    <div id="legend">
+      <legend class="">Event: <%= even.fullname %></legend>
+    </div>
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#eventinfo" data-toggle="tab">
+            <span class="badge">1</span>
+                App information
+          </a>
+          </li>
+          <li>
+            <a href="#appinfo" data-toggle="tab">
+              <span class="badge">2</span>
+                App information
+            </a>
+          </li>
+      </ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="eventinfo">
+    
+</div>
+<input type="hidden" id="appid" value="<%= appid %>">
+<div class="tab-pane" id="appinfo">
+
+</div>
+</div>
+</div>
+  </body>
+</html>

@@ -7,7 +7,7 @@
 	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
-  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js') %>
+  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js') %>
   <%- renderScriptsTags(scripts) %>
   </head>
   <body>
@@ -18,12 +18,12 @@
     <div id="legend">
       <legend class="">Edit user data</legend>
     </div>
+    <p>Please, have in mind that if you change users password it should be notified to him or her.</p>
     <div class="control-group">
       <!-- Username -->
       <label class="control-label"  for="username">Username</label>
       <div class="controls">
         <input type="text" id="username" name="username" value="<%= user.uname %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
       </div>
     </div>
 
@@ -32,7 +32,6 @@
       <label class="control-label" for="email">E-mail</label>
       <div class="controls">
         <input type="text" id="email" name="email" value="<%= user.email %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
       </div>
     </div>
 
@@ -41,7 +40,6 @@
       <label class="control-label" for="realname">Realname</label>
       <div class="controls">
         <input type="text" id="realname" name="realname" value="<%= user.realname %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
       </div>
     </div>
 
@@ -50,16 +48,14 @@
       <label class="control-label" for="org">Organization</label>
       <div class="controls">
         <input type="text" id="org" name="org" value="<%= user.org %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
       </div>
     </div>
 
     <div class="control-group">
       <!-- Password -->
-      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+      <label class="control-label"  for="password">Password</label>
       <div class="controls">
-        <input type="password" id="password_confirm" name="password_confirm" value="<%= user.upass %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please confirm password</p>
+        <input type="password" id="password" name="password" value="<%= user.upass %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 

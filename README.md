@@ -21,15 +21,19 @@ As mentioned before, the project will be based in node.js.
 **Note**: this is an initial list that may change in future time.
 - Socket.io
 - Express
-- CommonJS
-- CouchDB¹
-- PostgreSQL¹
+- Helmet
+- EJS
+- PostgreSQL
 - Twitter Bootstrap
 
-¹Doubting between these two.
 
 ##Usage
-The usage of this application is simple. At this moment the needed command (no DB support yet) is `node`
+First you need to create the schema in your database. Edit the connections to the database and then execute this commands:
+
+```bash
+node schema
+node app
+```
 
 Next, your default browser will open in `http://localhost:3000`
 

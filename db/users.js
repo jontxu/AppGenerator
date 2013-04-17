@@ -6,7 +6,6 @@ client.connect();
 module.exports.authenticate = function(username, password, callback) {
 	var is_admin = null;
 	var query = client.query('select uname, upass, email, is_admin from users where uname = $1 and upass = crypt($2, upass)',  [username, password]);
-	console.log(query);
 	query.on('end', function(row) {
 		if (is_admin == null) {
 			console.log("Incorrect username or password");
@@ -19,8 +18,7 @@ module.exports.authenticate = function(username, password, callback) {
 			console.log("Incorrect username or password");
 			callback(null);
 			return;
-		} else { 
-			console.log(row.uname + " " + row.is_admin);
+		} else {
 			is_admin = row.is_admin;
 			callback(row.is_admin);
 			return;
@@ -29,7 +27,7 @@ module.exports.authenticate = function(username, password, callback) {
 }
 
 module.exports.signup = function(name, pass, email, realname, org, callback) {
-	var query = client.query("INSERT INTO users (uname, upass, email, is_admin, realname, org) VALUES ($1, crypt($2, gen_salt('md5'), $3, false, $4, $5)", [name, pass, email, realname, org], function(err) {
+	var query = client.query("INSERT INTO users (uname, upass, email, is_admin, realname, org) VALUES ($1, crypt($2, gen_salt('md5')), $3, false, $4, $5)", [name, pass, email, realname, org], function(err) {
   	if (err) {
     	callback(err);
     	return;

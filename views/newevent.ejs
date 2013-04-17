@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
+  <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
+  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js') %>
+  <%- renderScriptsTags(scripts) %>
+  </head>
+  <body>
+  <div class="span3"></div>
+  <div id="main-container" class="container">
+ <form class="form-horizontal" id='signupform' action='/editevent' method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Add new event</legend>
+    </div>
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="fullname">Event name: *</label>
+      <div class="controls">
+        <input type="text" id="fullname" name="fullname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">The id will be the name without uppercase and no spaces</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="descr">Description: *</label>
+      <div class="controls">
+        <textarea rows="5" id="descr" name="descr" value="" placeholder="" class="required input-xlarge"></textarea>
+        <p class="help-block">What is the event about? You can upload the timetable later</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="sdate">Start date: *</label>
+      <div class="controls">
+        <input type="text" id="sdate" name="sdate" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Format: YYYY-MM-DD HH-MM</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="edate">End date: *</label>
+      <div class="controls">
+        <input type="text" id="edate" name="edate" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Same format as before</p>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="location">Location: *</label>
+      <div class="controls">
+        <input type="text" id="location" name="location" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">City, (state/province/region), country</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Submit</button>
+      </div>
+    </div>
+</div>
+    <input type="hidden" name="_csrf" value="<%= token %>">
+  </fieldset>
+</form>
+</div>
+  </body>
+</html>

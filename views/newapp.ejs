@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
+	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
+  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js') %>
+  <%- renderScriptsTags(scripts) %>
+  </head>
+  <body>
+  <div class="span3"></div>
+  <div id="main-container" class="container">
+ <form class="form-horizontal" id='signupform' action='/editevent' method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Creating app for <%= eventname %></legend>
+    </div>
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#eventgeneral" data-toggle="tab">
+            <span class="badge">1</span>
+                Event information
+          </a>
+          </li>
+          <li>
+            <a href="#appinfo" data-toggle="tab">
+              <span class="badge">2</span>
+                App information
+            </a>
+          </li>
+          <br/>
+           <button type="submit" name="submit" class="btn btn-primary">Save</button> <a class="btn btn-danger" href="/applist/">Cancel</a>
+      </ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="eventgeneral">
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="fullname">Event name</label>
+      <div class="controls">
+        <input type="text" id="fullname" name="fullname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="email">Description:</label>
+      <div class="controls">
+        <input type="text" id="email" name="email" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Please provide your E-mail</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="realname">Start date:</label>
+      <div class="controls">
+        <input type="text" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Please provide your E-mail</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="realname">End date:</label>
+      <div class="controls">
+        <input type="text" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Please provide your E-mail</p>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="realname">Location</label>
+      <div class="controls">
+        <input type="text" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Please provide your E-mail</p>
+      </div>
+    </div>
+</div>
+
+<div class="tab-pane" id="appinfo">
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="ename">Event name</label>
+      <div class="controls">
+        <input type="text" id="ename" name="ename" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+      </div>
+    </div>
+  </div>
+</div>
+    <input type="hidden" id="appid" value="<%= appid %>">
+    <input type="hidden" name="_csrf" value="<%= token %>">
+  </fieldset>
+</form>
+</div>
+  </body>
+</html>

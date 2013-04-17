@@ -10,10 +10,13 @@ var express = require('express'),
 	assert = require('assert'),
 	helmet = require('helmet'),
 	form = require('express-form'),
+	gm = require('googlemaps'),
+	util = require('util'),
 	field = form.field,
 	app = express(),
 	usersdb = require('./db/users'),
 	eventsdb = require('./db/events'),
+	appsdb = require('./db/apps'),
 	pg = require('pg'),
 	connectionString = process.env.DATABASE_URL || 'postgres://postgres:tistisquare@localhost/testdb',
 	client = new pg.Client(connectionString),
@@ -24,10 +27,10 @@ var express = require('express'),
 client.connect();
 
 app.configure(function(){
+  app.use(express.favicon(__dirname + '/public/favicon.ico'));
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
-  app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(helmet.xframe());
@@ -104,8 +107,21 @@ app.get('/applist', routes.apps);
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/event/new/', function(req, res) {
-	//TODO
-	res.render();
+	res.render('newevent', {title : 'Add new event'});
+});
+app.get('/event/:id', function(req, res) {
+	if (req.params.id) {
+		eventsdb.getevent(req.session.user, req.params.id, function(eventRow) {
+			if (eventRow == null)
+				console.log("error getting user");
+			else {
+				res.method = 'GET';
+				res.render('singleevent', {title : 'Event information', even: eventRow[0]});
+				}
+			});
+	} else {
+		res.redirect('back');
+	}
 });
 app.get('/event/edit/:id', function(req, res) {
 	if (req.params.id) {
@@ -114,7 +130,7 @@ app.get('/event/edit/:id', function(req, res) {
 				console.log("error getting user");
 			else {
 				res.method = 'GET';
-				res.render('event', {title : 'Editing event' + req.params.id, even: eventRow[0]});
+				res.render('event', {title : 'Editing event ' + eventRow[0].fullname, even: eventRow[0]});
 				}
 			});
 	} else {
@@ -135,11 +151,38 @@ app.get('/event/delete/:id', function(req, res) {
 		} else {
 			res.redirect('back');
 		}
-	res.render();
 });
-app.get('/app/:id/settings', function(req, res) {
-	//TODO
-	res.render();
+app.get('/app/settings/:id', function(req, res) {
+	if (req.params.id) {
+		eventsdb.geteventname(req.session.user, req.params.id, function(evento) {
+			if (evento == null) {
+				console.log("error getting user");
+				res.redirect('back');
+			} else {
+				res.method = 'GET';
+				console.log(evento);
+				res.render('newapp', {title : 'App settings' , eventname: evento[0].fullname, appid: req.params.id });
+			}
+		});
+	} else {
+		res.redirect('back');
+	}
+});
+app.get('/app/build/:id', function(req, res) {
+	if (req.params.id) {
+		eventsdb.geteventname(req.session.user, req.params.id, function(evento) {
+			if (evento == null) {
+				console.log("error getting user");
+				res.redirect('back');
+			} else {
+				res.method = 'GET';
+				console.log(evento);
+				res.render('newapp', {title : 'App settings' , eventname: evento[0].fullname, appid: req.params.id });
+			}
+		});
+	} else {
+		res.redirect('back');
+	}
 });
 app.get('/user/edit/:id', function(req, res) {
 	//TODO
@@ -182,7 +225,6 @@ app.get('/user/delete/:id', function(req, res) {
 app.post('/login', function(req, res) {
 	req.session.user = req.body.username;
 	usersdb.authenticate(req.body.username, req.body.password, function(is_admin) {
-	console.log(is_admin);
 	if (is_admin == null) {
 		res.render('index', { title: 'Login' });
 		req.session.user = null;
@@ -199,12 +241,11 @@ app.post('/login', function(req, res) {
 
 app.post('/signup', 
 	form(
-    	field("username").trim().minLength(3).required().is(/^[A-Z][a-z]+$/),
-    	field("password").trim().required().is(/^[A-Z][a-z][0-9]+$/),
-    	field("password_confirm").trim().required().is(/^[A-Z][a-z][0-9]+$/),
+    	field("username").trim().minLength(3).required().is(/^[A-z]+$/),
+    	field("password").trim().required().is(/^[a-z]+$/),
     	field("email").trim().isEmail(),
-    	field("realname").trim().minLength(3).required().is(/^[A-Z][a-z]+$/),
-    	field("org").trim().minLength(3).required().is(/^[A-Z][a-z]+$/)
+    	field("realname").trim().minLength(3).required().is(/^[A-z]+$/),
+    	field("org").trim().minLength(3).required().is(/^[A-z]+$/)
  		),
    	function(req, res) {
    		if (!req.form.isValid) {
@@ -219,8 +260,8 @@ app.post('/signup',
 			else {
 		   		usersdb.signup(req.body.username, req.body.password, req.body.email, req.body.realname, req.body.org, function(user) {
 		    		if (user) {
+		    			console.log('There has been an error while signing up');
 		      			res.redirect('register');
-	      				console.log('Username or mail already taken');
 		    		}
 		    		else if (user == null) {
 	      				res.redirect('/');
@@ -237,14 +278,15 @@ app.get('/logout', function(req, res) {
 })
 
 app.post('/newevent', function(req, res) {
-	eventsdb.insert(req.body.name, req.body.desc, req.body.startdate, req.body.enddate, req.body.location, req.body.username, function(events) {
+	var id = req.body.name.trim().toLowerCase(); //id is a slug for urls
+	eventsdb.insert(id, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.session.user, req.body.name, function(events) {
 	if (events) {
 		 // May change in time
-	      res.redirect('/event/new');
+	      res.redirect('/event/new/');
 	      console.log('Username or mail already taken');
 	    }
 	    else if (events == null) {
-	      res.redirect('/applist');
+	      res.redirect('/applist/');
 	    }
 	});
 	//TODO

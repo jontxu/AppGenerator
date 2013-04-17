@@ -4,7 +4,7 @@ var client = new pg.Client(connectionString);
 client.connect();
 var is_admin;
 
-module.exports.getallevents = function(callback) {
+module.exports.getallapps = function(callback) {
 	var rows = [];
 	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events');
 	query.on('row', function(row) {
@@ -15,7 +15,7 @@ module.exports.getallevents = function(callback) {
 	});
 }
 
-module.exports.getevent = function(username, eventname, callback) {
+module.exports.getapp = function(username, eventname, callback) {
 	var rows = [];
 	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1 and ename = $2', [username, eventname]);
 	query.on('row', function(row) {
@@ -26,30 +26,8 @@ module.exports.getevent = function(username, eventname, callback) {
 	});
 }
 
-module.exports.getuserevents = function(username, callback) {
-	var rows = [];
-	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1', [username]);
-	query.on('row', function(row) {
-		rows.push(row);
-	});
-	query.on('end', function(result) {
-		callback(rows);
-	});
-}
-module.exports.geteventname = function(username, eventname, callback) {
-	var rows = [];
-	var query = client.query('SELECT fullname FROM events where uname = $1 and ename = $2', [username, eventname]);
-	query.on('row', function(row) {
-		rows.push(row);
-	});
-	query.on('end', function(result) {
-		callback(rows);
-	});
-}
-
-
-module.exports.insert = function(name, desc, startdate, enddate, location, username, fullname, callback) {
-	var query = client.query('INSERT INTO events (ename, desc, sdate, edate, location, uname, fullname) VALUES ($1, $2, $3, $4, $5, $6)',
+module.exports.insert = function(name, desc, startdate, enddate, location, username, callback) {
+	var query = client.query('INSERT INTO events (ename, desc, sdate, edate, location, uname) VALUES ($1, $2, $3, $4, $5, $6)',
 	[name, desc, startdate, enddate, location, username], function(err) {
 		if (err) {
 			callback(err);
@@ -60,6 +38,7 @@ module.exports.insert = function(name, desc, startdate, enddate, location, usern
 		}
 	});
 }
+
 module.exports.update = function(name, fieldnames, fieldvalues, callback) {
 	var sqlquery = 'UPDATE events SET ';
 	for (var i = 0; i < fieldnames.length; i++) {

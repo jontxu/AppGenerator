@@ -7,70 +7,64 @@
 	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
-  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js') %>
+  <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js') %>
   <%- renderScriptsTags(scripts) %>
   </head>
   <body>
-  <div class="span4"></div>
-  <div class="span4">
- <form class="form-horizontal" id='signupform' action='editevent' method="POST">
+  <div class="span3"></div>
+  <div id="main-container" class="container">
+ <form class="form-horizontal" id='signupform' action='/editevent' method="POST">
   <fieldset>
     <div id="legend">
-      <legend class="">Edit event information</legend>
+      <legend class="">Change event and app information</legend>
     </div>
     <div class="control-group">
       <!-- Username -->
       <label class="control-label"  for="ename">Event name</label>
       <div class="controls">
-        <input type="text" id="ename" name="ename" value="<%= even.ename %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+        <input type="text" id="ename" name="ename" value="<%= even.fullname %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="email">Description:</label>
+      <label class="control-label" for="descr">Description:</label>
       <div class="controls">
-        <input type="text" id="email" name="email" value="<%= even.descr %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
+        <textarea rows="5" id="descr" name="descr" value="" placeholder="" class="required input-xlarge"><%= even.descr %></textarea>
       </div>
     </div>
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="realname">Start date:</label>
+      <label class="control-label" for="sdate">Start date:</label>
       <div class="controls">
-        <input type="text" id="realname" name="realname" value="<%= even.sdate %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
+        <input type="text" id="sdate" name="sdate" value="<%= even.sdate.getUTCFullYear() %>-<%= ('0' + (even.sdate.getUTCMonth() + 1)).slice(-2)%>-<%= ('0' + even.sdate.getUTCDate()).slice(-2) %> <%= ('0' + even.sdate.getHours()).slice(-2) %>:<%= ('0' + even.sdate.getMinutes()).slice(-2) %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="realname">End date:</label>
+      <label class="control-label" for="edate">End date:</label>
       <div class="controls">
-        <input type="text" id="realname" name="realname" value="<%= even.edate %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
+        <input type="text" id="edate" name="edate" value="<%= even.edate.getUTCFullYear() %>-<%= ('0' + (even.edate.getUTCMonth() + 1)).slice(-2) %>-<%= ('0' + even.edate.getUTCDate()).slice(-2) %> <%= ('0' + even.edate.getHours()).slice(-2) %>:<%= ('0' + even.edate.getMinutes()).slice(-2) %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="realname">Location</label>
+      <label class="control-label" for="location">Location</label>
       <div class="controls">
-        <input type="text" id="realname" name="realname" value="<%= even.location %>" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
+        <input type="text" id="location" name="location" value="<%= even.location %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
-
-
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
         <button class="btn btn-success">Update</button>
       </div>
     </div>
+</div>
     <input type="hidden" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>
