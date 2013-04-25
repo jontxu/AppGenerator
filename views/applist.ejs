@@ -35,7 +35,7 @@
         <td class="span2"><%= events[i].edate.getUTCFullYear() %>-<%= ('0' + (events[i].edate.getUTCMonth() + 1)).slice(-2) %>-<%= ('0' + events[i].edate.getUTCDate()).slice(-2) %> <%= ('0' + events[i].edate.getHours()).slice(-2) %>:<%= ('0' + events[i].edate.getMinutes()).slice(-2) %></td>
         <td class="span2"><%= events[i].location %></td>
         <td>
-          <a href="/event/edit/<%=events[i].ename %>"><i class="icon-pencil"></i></a>
+          <a href="/event/edit/<%=events[i].ename %>"><i class="icon-edit"></i></a>
           <a href="/event/delete/<%=events[i].ename %>" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
         </td>
      </tr> 

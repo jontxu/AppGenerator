@@ -21,29 +21,40 @@
     <div class="tabbable tabs-left">
       <ul class="nav nav-tabs">
         <li class="active">
-          <a href="#eventgeneral" data-toggle="tab">
+          <a href="#appgeneral" data-toggle="tab">
             <span class="badge">1</span>
-                Event information
-          </a>
-          </li>
-          <li>
-            <a href="#appinfo" data-toggle="tab">
-              <span class="badge">2</span>
                 App information
+          </a>
+        </li>
+        <li>
+          <a href="#schedule" data-toggle="tab">
+            <span class="badge">2</span>
+                Schedule
+          </a>
+        </li>
+        <li>
+          <a href="#appfiles" data-toggle="tab">
+            <span class="badge">3</span>
+                Required files
             </a>
-          </li>
-          <br/>
-           <button type="submit" name="submit" class="btn btn-primary">Save</button> <a class="btn btn-danger" href="/applist/">Cancel</a>
+        </li>
+        <li>
+            <a href="#appsettings" data-toggle="tab">
+              <span class="badge">4</span>
+                App settings
+            </a>
+        </li>
+        <br/>
+        <button type="submit" name="submit" class="btn btn-small btn-primary">Save</button> <a class="btn btn-small btn-danger" href="/applist/">Cancel</a>
       </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="eventgeneral">
+  <div class="tab-pane active" id="appgeneral">
     <div class="control-group">
       <!-- Username -->
-      <label class="control-label"  for="fullname">Event name</label>
+      <label class="control-label"  for="fullname">App name</label>
       <div class="controls">
         <input type="text" id="fullname" name="fullname" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
       </div>
     </div>
 
@@ -51,47 +62,90 @@
       <!-- E-mail -->
       <label class="control-label" for="email">Description:</label>
       <div class="controls">
-        <input type="text" id="email" name="email" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
+        <textarea rows="5" id="descr" name="descr" value="" placeholder="" class="required input-xlarge"></textarea>
+        <p class="help-block">Description for the app store</p>
       </div>
     </div>
+  </div>
 
+  <div class="tab-pane" id="schedule">
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="realname">Start date:</label>
+      <label class="control-label" for="realname">Logo/splash screen:</label>
       <div class="controls">
-        <input type="text" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="realname">End date:</label>
-      <div class="controls">
-        <input type="text" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
-      </div>
-    </div>
-
-
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="realname">Location</label>
-      <div class="controls">
-        <input type="text" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Please provide your E-mail</p>
+        <input type="file" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">A .png file is preferred</p>
       </div>
     </div>
 </div>
 
-<div class="tab-pane" id="appinfo">
+<div class="tab-pane" id="appfiles">
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="realname">Logo/splash screen:</label>
+      <div class="controls">
+        <input type="file" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">A .png file is preferred</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="realname">CSS files:</label>
+      <div class="controls">
+        <input type="file" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Download <a href="">this file</a>, edit it and upload it</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="realname">Other files:</label>
+      <div class="controls">
+        <input type="file" id="realname" name="realname" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Download <a href="">this file</a>, edit it and upload it</p>
+      </div>
+    </div>
+</div>
+
+<div class="tab-pane" id="appsettings">
     <div class="control-group">
       <!-- Username -->
-      <label class="control-label"  for="ename">Event name</label>
+      <label class="control-label"  for="ename">iOS</label>
       <div class="controls">
-        <input type="text" id="ename" name="ename" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+        <input type="checkbox" id="twitter" value="">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="ename">Android</label>
+      <div class="controls">
+        <input type="checkbox" id="twitter" value="">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="ename">Twitter</label>
+      <div class="controls">
+        <input type="checkbox" id="twitter" value="">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="ename">Facebook</label>
+      <div class="controls">
+        <input type="checkbox" id="twitter" value="">
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="ename">Evernote</label>
+      <div class="controls">
+        <input type="checkbox" id="twitter" value="">
       </div>
     </div>
   </div>

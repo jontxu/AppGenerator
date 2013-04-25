@@ -29,13 +29,13 @@
         <tbody>
   	     <% for(var i=0; i < rows.length; i++) { %>
           <tr>
-            <td class="span2"><%= rows[i].uname %></td>
+            <td class="span2"><a href="/user/<%= rows[i].uname %>"><%= rows[i].uname %></a></td>
             <td class="span2"><%= rows[i].realname %></td>
             <td class="span6"><%= rows[i].org %></td>
             <td width="span2"><%= rows[i].email %></td>
             <td class="span2"><span class="label label-success">Active</span></td>
             <td>
-          	 <a href="/user/edit/<%=rows[i].uname %>"><i class="icon-pencil"></i></a>
+          	 <a href="/user/edit/<%=rows[i].uname %>"><i class="icon-edit"></i></a>
               <a href="/user/delete/<%=rows[i].uname %>" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
             </td>
           </tr> 

@@ -26,6 +26,17 @@ module.exports.getevent = function(username, eventname, callback) {
 	});
 }
 
+module.exports.geteventbyname = function(eventname, callback) {
+	var rows = [];
+	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where ename = $1', [eventname]);
+	query.on('row', function(row) {
+		rows.push(row);
+	});
+	query.on('end', function(result) {
+		callback(rows);
+	});
+}
+
 module.exports.getuserevents = function(username, callback) {
 	var rows = [];
 	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1', [username]);
@@ -60,15 +71,8 @@ module.exports.insert = function(name, desc, startdate, enddate, location, usern
 		}
 	});
 }
-module.exports.update = function(name, fieldnames, fieldvalues, callback) {
-	var sqlquery = 'UPDATE events SET ';
-	for (var i = 0; i < fieldnames.length; i++) {
-		query = query + fieldnames[i] + '=' + fieldvalues[i];
-		if (i != fieldnames.length) 
-			query += ', ';
-	}
-	query += 'WHERE ename =' + name;
-	var query = client.query(sqlquery, function(err) {
+module.exports.update = function(ename, name, desc, sdate, edate, loc, callback) {
+	var query = client.query('UPDATE EVENTS set fullname = $1, descr = $2, sdate = $3, edate = $4, location = $5 where ename = $6', [name, desc, sdate, edate, loc, ename], function(err) {
 		if (err) {
 			callback(err);
 			return;
@@ -82,6 +86,19 @@ module.exports.update = function(name, fieldnames, fieldvalues, callback) {
 module.exports.delete = function(name, username, callback) {
 	var rows = [];
 	var query = client.query('DELETE FROM events WHERE ename = $1 and uname = $2', [name, username], function(err) {
+		if (err) {
+			callback(err);
+			return;
+		} else {
+			callback(null);
+			return;
+		}
+	});
+}
+
+module.exports.deleteevent = function(name, callback) {
+	var rows = [];
+	var query = client.query('DELETE FROM events WHERE ename = $1', [name], function(err) {
 		if (err) {
 			callback(err);
 			return;
