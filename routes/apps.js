@@ -9,7 +9,7 @@ exports.settings = function(req, res) {
 					console.log("error getting user");
 				else {
 					res.method = 'GET';
-					res.render('newapp', {title : 'App settings' , eventname: evento[0].fullname, appid: req.params.id });
+					res.render('newapp', {title : 'App settings' , eventname: evento[0].fullname, appid: req.params.id, user: req.session.user });
 					}
 				});
 		} else if (req.session.role == "user") {
@@ -19,7 +19,7 @@ exports.settings = function(req, res) {
 					res.redirect('back');
 				} else {
 					res.method = 'GET';
-					res.render('newapp', {title : 'App settings' , eventname: evento[0].fullname, appid: req.params.id });
+					res.render('newapp', {title : 'App settings' , eventname: evento[0].fullname, appid: req.params.id, user: req.session.user });
 				}
 			});
 		}

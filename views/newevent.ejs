@@ -11,12 +11,56 @@
   <%- renderScriptsTags(scripts) %>
   </head>
   <body>
-  <div class="span3"></div>
+  <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container"><!-- Collapsable nav bar -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <!-- Your site name for the upper left corner of the site -->
+                    <a class="brand" href="/">PhoneGap events app generator</a>
+
+                    <!-- Start of the nav bar content -->
+                    <div class="nav-collapse"><!-- Other nav bar content -->
+
+                        
+                        
+
+                        <!-- The drop down menu -->
+                        <ul class="nav pull-right">
+                            
+                                <li>
+                                    <a href="">
+                                        Welcome, <%= user %>
+                                    </a>
+                                </li>
+                                <li class="divider-vertical"></li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
   <div id="main-container" class="container">
+  <div class="row-fluid">
+  <div class="span3"></div>
+  <div class="span7">
  <form class="form-horizontal" id='signupform' action='/editevent' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Add new event</legend>
+    </div>
+    <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <b>Reminder:</b> the app info is automatically generated (empty). Updating those data is critical.
     </div>
     <div class="control-group">
       <!-- Username -->
@@ -74,5 +118,12 @@
   </fieldset>
 </form>
 </div>
+</div>
+</div>
+</div>
+<footer>
+    <img id="logo-left" src="/static/img/morelab.png" width="150" />
+    <img id="logo-right" src="/static/img/deustotech.png" width="150" />
+  </footer>
   </body>
 </html>

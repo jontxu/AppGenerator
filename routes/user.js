@@ -17,7 +17,7 @@ exports.getuser = function(req, res) {
 						console.log("Error getting events");
 						res.redirect("back");
 					} else {
-						res.render('userinfo', { title : 'User information', ev: events, us: user[0] });
+						res.render('userinfo', { title : 'User information', ev: events, us: user[0], user: req.session.user });
 					}
 				});
 			}
@@ -35,7 +35,7 @@ exports.userinfo = function(req, res) {
 				console.log("error getting user");
 			else {
 				res.method = 'GET';
-				res.render('user', {title : 'Editing page for ' + req.params.id, user: userRow[0]});
+				res.render('user', {title : 'Editing page for ' + req.params.id, us: userRow[0], user: req.session.user});
 				}
 			});
 	} else {
@@ -62,6 +62,7 @@ exports.remove =  function(req, res) {
 exports.logout = function(req, res) {
 	req.session.user = null;
 	req.session.role = null;
+	console.log(req.session.role);
 	res.redirect('/');
 }
 
@@ -71,6 +72,7 @@ exports.logout = function(req, res) {
 
  exports.login = function(req, res) {
 	req.session.user = req.body.username;
+	res.locals.user = req.body.username;
 	usersdb.authenticate(req.body.username, req.body.password, function(is_admin) {
 	if (is_admin == null) {
 		res.render('index', { title: 'Login' });
@@ -78,9 +80,11 @@ exports.logout = function(req, res) {
 		res.redirect("/");
 	} else if (is_admin == false) {
 		req.session.role = "user";
+		console.log(req.session.role);
 		res.redirect('/applist/');
 	} else if (is_admin == true) {
 		req.session.role = "admin";
+		console.log(req.session.role);
 		res.redirect('/admin/');
 		}
 	});

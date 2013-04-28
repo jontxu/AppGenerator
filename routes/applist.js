@@ -13,7 +13,7 @@ exports.get = function(req, res) {
 				console.log("Error getting events");
 			else {
 				res.method = 'GET';
-				res.render('applist', {title: 'My apps & events', events: eventRows, username: req.session.user});		
+				res.render('applist', {title: 'My apps & events', events: eventRows, username: req.session.user, user: req.session.user});		
 			} 
 		});
 	}

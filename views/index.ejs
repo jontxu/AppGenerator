@@ -11,10 +11,55 @@
   <%- renderScriptsTags(scripts) %>
   </head>
   <body>
+  <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container"><!-- Collapsable nav bar -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <!-- Your site name for the upper left corner of the site -->
+                    <a class="brand" href="/">PhoneGap events app generator</a>
+
+                    <!-- Start of the nav bar content -->
+                    <div class="nav-collapse"><!-- Other nav bar content -->
+
+                        
+                        
+
+                        <!-- The drop down menu
+                        <ul class="nav pull-right">
+                            
+                                <li>
+                                    <a href="">
+                                        Welcome
+                                    </a>
+                                </li>
+                                <li class="divider-vertical"></li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                            
+                        </ul>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+  <div id="main-container" class="container">
+  <div class="row-fluid">
   <div class="span4"></div>
   <div class="span4">
     <form class="form-horizontal" action='login' method="POST">
   <fieldset>
+    
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <b>Got any bug reports?</b><br/> Drop a mail to the system administrator <a href="mailto:jon.juaristi@opendeusto.es">here</a>.
+  </div>
     <div id="legend">
       <legend class="">Login</legend>
     </div>
@@ -22,7 +67,7 @@
       <!-- Username -->
       <label class="control-label"  for="username">Username</label>
       <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+        <input type="text" id="username" name="username" placeholder="" class="input-large">
       </div>
     </div>
  
@@ -30,7 +75,7 @@
       <!-- Password-->
       <label class="control-label" for="password">Password</label>
       <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+        <input type="password" id="password" name="password" placeholder="" class="input-large">
       </div>
     </div>
  
@@ -44,9 +89,13 @@
     <input type="hidden" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>
-Don't have an account? <a href="./register">You may register here</a>
+Don't have an account? <a href="./register/">You may register here</a>
 </div>
-<script type='text/javascript' src="/javascripts/jquery-1.9.1.min.js"/>
-<script type='text/javascript' src="/javascripts/jquery.validate.js"/>
+</div>
+</div>
   </body>
+    <footer>
+    <img id="logo-left" src="/static/img/morelab.png" width="150" />
+    <img id="logo-right" src="/static/img/deustotech.png" width="150" />
+  </footer>
 </html>

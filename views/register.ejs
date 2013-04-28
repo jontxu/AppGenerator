@@ -11,22 +11,66 @@
   <%- renderScriptsTags(scripts) %>
   </head>
   <body>
-  <div class="span4"></div>
-  <div class="span4">
+  <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container"><!-- Collapsable nav bar -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <!-- Your site name for the upper left corner of the site -->
+                    <a class="brand" href="/">PhoneGap events app generator</a>
+
+                    <!-- Start of the nav bar content -->
+                    <div class="nav-collapse"><!-- Other nav bar content -->
+
+                        <!-- The drop down menu -->
+                        <ul class="nav pull-right">
+                            
+                                <li>
+                                    <a href="">
+                                        Welcome
+                                    </a>
+                                </li>
+                                <li class="divider-vertical"></li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+  <div id="main-container" class="container">
+  <div class="row-fluid">
+  <div class="span3"></div>
+  <div class="span7">
  <form class="form-horizontal" id='signupform' action='signup' method="POST">
   <fieldset>
     <div id="legend">
-      <legend class="">Register</legend>
+      <legend class="">Sign up to the system</legend>
+    </div>
+    <div class="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Warning!</strong> It's recommended that an organization registers a user per knowledge area.
     </div>
     <% if (formerror != false ) { %>
-      <%= formerrortext %>
+      <div class="alert alert-error">
+       <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Error!</strong> <%= formerrortext %>
+    </div>
     <% } %>
     <div class="control-group">
       <!-- Username -->
       <label class="control-label"  for="username">Username</label>
       <div class="controls">
         <input type="text" id="username" name="username" placeholder="" class="required input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+        <p class="help-block">Can contain any letters or numbers, without spaces</p>
       </div>
     </div>
 
@@ -85,5 +129,11 @@
   </fieldset>
 </form>
 </div>
+</div>
+</div>
+<footer>
+    <img id="logo-left" src="/static/img/morelab.png" width="150" />
+    <img id="logo-right" src="/static/img/deustotech.png" width="150" />
+  </footer>
   </body>
 </html>

@@ -11,7 +11,47 @@
     <%- renderScriptsTags(scripts) %>
   </head>
   <body>
-    <div class="span3"></div>
+  <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container"><!-- Collapsable nav bar -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <!-- Your site name for the upper left corner of the site -->
+                    <a class="brand" href="/">PhoneGap events app generator</a>
+
+                    <!-- Start of the nav bar content -->
+                    <div class="nav-collapse"><!-- Other nav bar content -->
+
+                        
+                        
+
+                        <!-- The drop down menu -->
+                        <ul class="nav pull-right">
+                            
+                                <li>
+                                    <a href="">
+                                        Welcome, <%= user %>
+                                    </a>
+                                </li>
+                                <li class="divider-vertical"></li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+  <div id="main-container" class="container">
+  <div class="row-fluid">
+  <div class="span4"></div>
     <div class="span6">
       <div id="legend">
         <legend class="">Event: <%= even.fullname %></legend>
@@ -28,11 +68,17 @@
       <input type="hidden" id="address" value="<%=even.location %>">
       <div id="map-canvas" style="height:50%; width=50%;"></div>
       <div class="btn-toolbar">
-      <td class="span2">
-        <a class="btn btn-primary" href="/app/settings/<%=even.ename %>"><i class="icon-wrench icon-white"></i> App settings</a>
-        <a class="btn btn-success" href="/app/build/<%=even.ename %>"><i class="icon-qrcode icon-white"></i> Build app</a>
-      </td>
+        <td class="span3">
+          <a class="btn btn-primary" href="/app/settings/<%=even.ename %>"><i class="icon-wrench icon-white"></i> App settings</a>
+          <a class="btn btn-success" href="/app/build/<%=even.ename %>"><i class="icon-qrcode icon-white"></i> Build app</a>
+        </td>
       </div>
     </div>
+  </div>
+</div>
+    <footer>
+      <img id="logo-left" src="/static/img/morelab.png" width="150" />
+      <img id="logo-right" src="/static/img/deustotech.png" width="150" />
+  </footer>
   </body>
 </html>

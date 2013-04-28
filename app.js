@@ -48,6 +48,7 @@ app.configure(function(){
 });
 
 app.locals({
+  user: "",
  	scripts: [],
   	renderScriptsTags: function (all) {
     	app.locals.scripts = [];

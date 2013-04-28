@@ -11,19 +11,62 @@
   <%- renderScriptsTags(scripts) %>
   </head>
   <body>
-  <div class="span4"></div>
-  <div class="span4">
+  <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container"><!-- Collapsable nav bar -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <!-- Your site name for the upper left corner of the site -->
+                    <a class="brand" href="/">PhoneGap events app generator</a>
+
+                    <!-- Start of the nav bar content -->
+                    <div class="nav-collapse"><!-- Other nav bar content -->
+
+                        
+                        
+
+                        <!-- The drop down menu -->
+                        <ul class="nav pull-right">
+                            
+                                <li>
+                                    <a href="">
+                                        Welcome, <%= user %>
+                                    </a>
+                                </li>
+                                <li class="divider-vertical"></li>
+                                <li>
+                                    <a href="/logout/">
+                                        Logout
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+  <div id="main-container" class="container">
+  <div class="row-fluid">
+  <div class="span3"></div>
+  <div class="span6">
  <form class="form-horizontal" id='signupform' action='edituser' method="POST">
   <fieldset>
     <div id="legend">
-      <legend class="">Edit user data</legend>
+      <legend class="">Editing data for user '<%= us.uname %>'</legend>
     </div>
-    <p>Please, have in mind that if you change users password it should be notified to him or her.</p>
+    <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <b>Reminder:</b> If you change the password it should be notified to him or her.
+    </div>
     <div class="control-group">
       <!-- Username -->
       <label class="control-label"  for="username">Username</label>
       <div class="controls">
-        <input type="text" id="username" name="username" value="<%= user.uname %>" placeholder="" class="required input-xlarge">
+        <input type="text" id="username" name="username" value="<%= us.uname %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
@@ -31,7 +74,7 @@
       <!-- E-mail -->
       <label class="control-label" for="email">E-mail</label>
       <div class="controls">
-        <input type="text" id="email" name="email" value="<%= user.email %>" placeholder="" class="required input-xlarge">
+        <input type="text" id="email" name="email" value="<%= us.email %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
@@ -39,7 +82,7 @@
       <!-- E-mail -->
       <label class="control-label" for="realname">Realname</label>
       <div class="controls">
-        <input type="text" id="realname" name="realname" value="<%= user.realname %>" placeholder="" class="required input-xlarge">
+        <input type="text" id="realname" name="realname" value="<%= us.realname %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
@@ -47,7 +90,7 @@
       <!-- E-mail -->
       <label class="control-label" for="org">Organization</label>
       <div class="controls">
-        <input type="text" id="org" name="org" value="<%= user.org %>" placeholder="" class="required input-xlarge">
+        <input type="text" id="org" name="org" value="<%= us.org %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
@@ -55,7 +98,7 @@
       <!-- Password -->
       <label class="control-label"  for="password">Password</label>
       <div class="controls">
-        <input type="password" id="password" name="password" value="<%= user.upass %>" placeholder="" class="required input-xlarge">
+        <input type="password" id="password" name="password" value="<%= us.upass %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
@@ -69,5 +112,11 @@
   </fieldset>
 </form>
 </div>
+</div>
+</div>
+  <footer>
+      <img id="logo-left" src="/static/img/morelab.png" width="150" />
+      <img id="logo-right" src="/static/img/deustotech.png" width="150" />
+  </footer>
   </body>
 </html>

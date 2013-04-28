@@ -7,7 +7,7 @@ var usersdb = require('../db/users');
  */
 
 exports.addevent = function(req, res) {
-	res.render('newevent', {title : 'Add new event'});
+	res.render('newevent', {title : 'Add new event', user: req.session.user});
 }
 
 exports.getevent = function(req, res) {
@@ -18,7 +18,7 @@ exports.getevent = function(req, res) {
 					console.log("error getting user");
 				else {
 					res.method = 'GET';
-					res.render('singleevent', {title : 'Event information', even: eventRow[0] });
+					res.render('singleevent', {title : 'Event information', even: eventRow[0], user: req.session.user });
 				}
 			});
 		} else if (req.session.role == "user") {
@@ -26,7 +26,7 @@ exports.getevent = function(req, res) {
 				if (eventRow == null)
 					console.log("error getting user");
 				else {
-					res.render('singleevent', {title : 'Event information', even: eventRow[0] });
+					res.render('singleevent', {title : 'Event information', even: eventRow[0], user: req.session.user });
 				}
 			});
 		}
@@ -43,7 +43,7 @@ exports.edit = function(req, res) {
 					console.log("error getting user");
 				else {
 					res.method = 'GET';
-					res.render('event', {title : 'Editing event ' + eventRow[0].fullname, even: eventRow[0]});
+					res.render('event', {title : 'Editing event ' + eventRow[0].fullname, even: eventRow[0], user: req.session.user});
 					}
 				});
 		} else if (req.session.role == "user") {
@@ -52,7 +52,7 @@ exports.edit = function(req, res) {
 					console.log("error getting user");
 				else {
 					res.method = 'GET';
-					res.render('event', {title : 'Editing event ' + eventRow[0].fullname, even: eventRow[0]});
+					res.render('event', {title : 'Editing event ' + eventRow[0].fullname, even: eventRow[0], user: req.session.user});
 					}
 				});
 		}
