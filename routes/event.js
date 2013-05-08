@@ -62,6 +62,10 @@ exports.edit = function(req, res) {
 }
 
 exports.del = function(req, res) {
+	var sys = require('sys');
+	var exec = require('child_process').exec;
+	var child;
+	var fs = require('fs');
 	if (req.params.id) {
 		if (req.session.role == "admin") {
 			eventsdb.deleteevent(req.params.id, function(usererror) {
@@ -69,6 +73,13 @@ exports.del = function(req, res) {
 					console.log("error deleting event");
 					res.redirect('back');
 				} else if (usererror == null) {
+					child = exec("rm -r gen/" + req.params.id + "/", function (error, stdout, stderr) {
+  						sys.print('Output: ' + stdout);
+  							if (error !== null) {
+		    					console.log('exec error: ' + error);
+				    			res.send(500);
+  						}
+					});
 					console.log('deleted event ' + req.params.id);
 					res.redirect('back');
 				}
@@ -79,6 +90,13 @@ exports.del = function(req, res) {
 					console.log("error deleting event");
 					res.redirect('back');
 				} else if (usererror == null) {
+					child = exec("rm -r gen/" + req.params.id + "/", function (error, stdout, stderr) {
+  						sys.print('Output: ' + stdout);
+  							if (error !== null) {
+		    					console.log('exec error: ' + error);
+				    			res.send(500);
+  						}
+					});
 					console.log('deleted event ' + req.params.id);
 					res.redirect('back');
 				}
@@ -95,15 +113,31 @@ exports.del = function(req, res) {
  */
 exports.add = function(req, res) {
 	var id = req.body.name.trim().toLowerCase(); //id is a slug for urls
+	var sys = require('sys');
+	var exec = require('child_process').exec;
+	var child;
+	var fs = require('fs');
 	eventsdb.insert(id, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.session.user, req.body.name, function(events) {
-	if (events) {
-		 // May change in time
-	      res.redirect('/event/new/');
-	      console.log('Error inserting in database');
-	    }
-	    else if (events == null) {
-	      res.redirect('/applist/');
-	    }
+		if (events) {
+			child = exec("mkdir gen/" + id, function (error, stdout, stderr) {
+  				sys.print('Output: ' + stdout);
+  					if (error !== null) {
+	    				console.log('exec error: ' + error);
+	    				res.send(500);
+  				}
+			});
+			child = exec("mkdir gen/" + id + "/assets", function (error, stdout, stderr) {
+	  			sys.print('Output: ' + stdout);
+  				if (error !== null) {
+		    		console.log('exec error: ' + error);
+	    			res.send(500);
+  				}
+			});
+			res.redirect('/event/new/');
+			console.log('Error inserting in database');
+		} else if (events == null) {
+			res.redirect('/applist/');
+		}
 	});
 }
 

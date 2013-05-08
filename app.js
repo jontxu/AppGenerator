@@ -7,6 +7,7 @@ var express = require('express'),
 	user = require('./routes/user'),
 	events = require('./routes/event'),
 	apps = require('./routes/apps'),
+  lectures = require('./routes/lectures'),
 	http = require('http'),
 	path = require('path'),
 	assert = require('assert'),
@@ -109,8 +110,11 @@ app.get('/app/build/:id', apps.build);
 app.get('/user/:id', user.getuser);
 app.get('/user/edit/:id', user.userinfo);
 app.get('/user/delete/:id', user.remove);
+app.get('/lectures/list/:id', lectures.getlect);
+app.get('/lectures/update/:id', lectures.save)
 app.get('/logout/', user.logout);
 app.get('/', routes.index);
+
 
 /*
  * POST part
@@ -126,10 +130,10 @@ app.post('/signup',
     	field("org").trim().minLength(3).required().is(/^[A-z]+$/)
  		), 
 	user.register);
-app.post('/newevent', requireAuth, events.add);
-app.post('/updateevent', requireAuth,events.update);
-app.post('/edituser', requireAuth, user.edit);
-app.post('/editapp', requireAuth, apps.save);
+app.post('/event/add', requireAuth, events.add);
+app.post('/event/update', requireAuth,events.update);
+app.post('/user/edit', requireAuth, user.edit);
+app.post('/app/edit', requireAuth, apps.save);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
