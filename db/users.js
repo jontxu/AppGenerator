@@ -60,8 +60,8 @@ module.exports.getuser = function(name, callback) {
   });
 }
 
-module.exports.update = function(name, pass, email, realname, org, formername, callback) {
-	var query = client.query("UPDATE users SET uname = $1, upass = crypt($2, gen_salt('md5')), email = $3, realname = $4, org = $5 where uname = $6", [name, pass, email, realname, org, formername], function(err) {
+module.exports.update = function(name, email, realname, org, formername, callback) {
+	var query = client.query("UPDATE users SET uname = $1, email = $2, realname = $3, org = $4 where uname = $5", [name, email, realname, org, formername], function (err) {
 		if (err) {
 			callback(err);
 			return;

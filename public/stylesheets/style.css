@@ -35,6 +35,15 @@ footer img {
   float: right;
   margin-right: 15em;
 }
+#map-canvas {
+  height: 400px;
+  width: 400px;
+}
+@media print {
+  #map_canvas {
+    height: 400px;
+  }
+}
 /* 
 
 Code for datatable visualization

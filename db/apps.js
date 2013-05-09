@@ -16,8 +16,8 @@ module.exports.getapp = function(eventname, callback) {
 	});
 }
 
-module.exports.update = function(appname, descr, logo, twit, fb, ever, ios, andr, keystore, callback) {
-	var query = client.query('UPDATE appsettings SET appname = $1, description = $2, logo = $3, twitter = $4, facebook = $5, ios = $6, android = $7, keystorename = $8 where emame = $9' [appname, descr, logo, twit, fb, ever, ios, andr, keystore, ename], function(err) {
+module.exports.update = function(appname, descr, twit, fb, ios, andr, ever, keystore, ename, callback) {
+	var query = client.query('UPDATE appsettings SET appname = $1, description = $2, twitter = $3, facebook = $4, ios = $5, android = $6, evernote = $7, keystorename = $8 where ename = $9', [appname, descr, twit, fb, ios, andr, ever, keystore, ename], function (err) {
 		if (err) {
 			callback(err);
 			return;

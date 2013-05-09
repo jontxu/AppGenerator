@@ -34,7 +34,7 @@ exports.save = function(req, res) {
 				if (lect == null)
 					res.send(500);
 				else {
-					console.log('Event added');
+					console.log('Lecture added');
 				}
 			});
 		}

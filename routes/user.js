@@ -113,25 +113,20 @@ exports.register = function(req, res) {
 	}
 }
 
-exports.edit = function(res, res) {
-   	if (!req.form.isValid) {
+exports.edit = function(req, res) {
+   	/* if (!req.form.isValid) {
    		console.log(req.form.errors);
    		res.redirect('back');
-   	}
-   	else {
-		if (req.body.password != req.body.password_confirm) {
-	   		console.log('Passwords don\'t match');
-	   		res.redirect('back');
-		} else {
-	   		usersdb.update(req.body.username, req.body.password, req.body.email, req.body.realname, req.body.org, function(user) {
+   	} else { */
+	   		usersdb.update(req.body.username, req.body.email, req.body.realname, req.body.org, req.body.formername, function(user) {
 		   		if (user) {
 		   			console.log('There has been an error while updating');
 		   			res.redirect('back');
 		   		}
 		   		else if (user == null) {
-	      			res.redirect('back');
+	      			res.redirect('/admin/');
 		   		}
 	   		});
-		}
-	}
+//		}
+//	}
 }

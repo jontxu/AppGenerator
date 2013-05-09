@@ -3,9 +3,9 @@ var map;
 
 function initialize() {
   geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(-34.397, 150.644);
+  var latlng = new google.maps.LatLng(54.9, 25.316667);
     var mapOptions = {
-      zoom: 8,
+      zoom: 3,
        center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -22,8 +22,8 @@ function codeAddress() {
       position: results[0].geometry.location
     });
   } else {
-    alert('Geocode was not successful for the following reason: ' + status);
+    alert('Geocode was not successful for the following reason: ' + status + ' ' + address + ' ' + results);
   }
 });
 }
-window.onLoad = initialize;
+google.maps.event.addDomListener(window, 'load', initialize);

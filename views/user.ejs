@@ -53,7 +53,7 @@
   <div class="row-fluid">
   <div class="span3"></div>
   <div class="span6">
- <form class="form-horizontal" id='signupform' action='../../edit' method="POST">
+ <form class="form-horizontal" id='signupform' action='../edit' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Editing data for user '<%= us.uname %>'</legend>
@@ -93,21 +93,14 @@
         <input type="text" id="org" name="org" value="<%= us.org %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
-
-    <div class="control-group">
-      <!-- Password -->
-      <label class="control-label"  for="password">Password</label>
-      <div class="controls">
-        <input type="password" id="password" name="password" value="<%= us.upass %>" placeholder="" class="required input-xlarge">
-      </div>
-    </div>
-
+    
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
         <button class="btn btn-success">Update</button>
       </div>
     </div>
+    <input type="hidden" name="formername" value="<%= us.uname %>">
     <input type="hidden" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>

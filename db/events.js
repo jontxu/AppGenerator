@@ -60,9 +60,10 @@ module.exports.geteventname = function(username, eventname, callback) {
 
 
 module.exports.insert = function(name, desc, startdate, enddate, location, username, fullname, callback) {
-	var query = client.query('INSERT INTO events (ename, desc, sdate, edate, location, uname, fullname) VALUES ($1, $2, $3, $4, $5, $6)',
-	[name, desc, startdate, enddate, location, username], function(err) {
+	var query = client.query('INSERT INTO events (ename, descr, sdate, edate, location, uname, fullname) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+	[name, desc, startdate, enddate, location, username, fullname], function(err) {
 		if (err) {
+			console.log(err);
 			callback(err);
 			return;
 		} else {

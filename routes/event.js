@@ -1,6 +1,9 @@
 var eventsdb = require ('../db/events');
 var usersdb = require('../db/users');
-
+var sys = require('sys');
+var exec = require('child_process').exec;
+var child;
+var fs = require('fs');
 
 /*
  * GET part
@@ -112,13 +115,14 @@ exports.del = function(req, res) {
  * POST part
  */
 exports.add = function(req, res) {
-	var id = req.body.name.trim().toLowerCase(); //id is a slug for urls
-	var sys = require('sys');
-	var exec = require('child_process').exec;
-	var child;
-	var fs = require('fs');
-	eventsdb.insert(id, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.session.user, req.body.name, function(events) {
-		if (events) {
+	console.log(req.body.fullname);
+	var id = req.body.fullname.replace(/\s/g, "").toLowerCase(); //id is a slug for urls
+	console.log(id);
+	eventsdb.insert(id, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.session.user, req.body.fullname, function (events) {
+		if (events) {			
+			console.log('Error inserting in database');
+			res.redirect('/event/new/');
+		} else if (events == null) {
 			child = exec("mkdir gen/" + id, function (error, stdout, stderr) {
   				sys.print('Output: ' + stdout);
   					if (error !== null) {
@@ -133,19 +137,17 @@ exports.add = function(req, res) {
 	    			res.send(500);
   				}
 			});
-			res.redirect('/event/new/');
-			console.log('Error inserting in database');
-		} else if (events == null) {
 			res.redirect('/applist/');
 		}
 	});
 }
 
 exports.update = function(req, res) {
-	var id = req.body.name.trim().toLowerCase(); //id is a slug for urls
-	eventsdb.update(id, req.body.name, req.body.descr, req.body.sdate, req.body.edate, req.body.location, function(events) {
+	var name = req.body.ename;
+	var id = name.replace(/\s/g, "").toLowerCase(); //id is a slug for urls
+	eventsdb.update(id, req.body.ename, req.body.descr, req.body.sdate, req.body.edate, req.body.location, function(events) {
 		if (events == null) {
-			res.redirect('back');
+			res.redirect('/applist/');
 		} else {
 			res.redirect('/event/' + id);
 			console.log('Error inserting in database');

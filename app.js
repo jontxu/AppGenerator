@@ -107,6 +107,7 @@ app.get('/event/edit/:id', events.edit);
 app.get('/event/delete/:id', events.del);
 app.get('/app/settings/:id', apps.settings);
 app.get('/app/build/:id', apps.build);
+app.get('/app/get/:id', apps.download);
 app.get('/user/:id', user.getuser);
 app.get('/user/edit/:id', user.userinfo);
 app.get('/user/delete/:id', user.remove);

@@ -7,7 +7,7 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
-    <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js', 'googlemaps.js?v=3.exp&sensor=false', 'map.js') %>
+    <% scripts.push('jquery-1.9.1.min.js', 'jquery.validate.js', 'signupform.js', 'bootstrap.js', 'googlemaps.js?v=3.exp&sensor=true', 'map.js') %>
     <%- renderScriptsTags(scripts) %>
   </head>
   <body>
@@ -64,13 +64,16 @@
 
       <p></p><b>End date:</b> <%= even.edate.getUTCFullYear() %>-<%= ('0' + (even.edate.getUTCMonth() + 1)).slice(-2) %>-<%= ('0' + even.edate.getUTCDate()).slice(-2) %> <%= ('0' + even.edate.getHours()).slice(-2) %>:<%= ('0' + even.edate.getMinutes()).slice(-2) %></p>
 
-      <b>Location:</b>
+      <b>Location:</b> <%= even.location %> <button class="btn-mini btn-primary" value="Geocode" onclick="codeAddress()"><i class="icon-globe icon-white"></i> Locate</button>
       <input type="hidden" id="address" value="<%=even.location %>">
-      <div id="map-canvas" style="height:50%; width=50%;"></div>
+      <br/><br/>
+      <div id="map-canvas"></div>
+      <br/>
       <div class="btn-toolbar">
         <td class="span3">
           <a class="btn btn-primary" href="/app/settings/<%=even.ename %>"><i class="icon-wrench icon-white"></i> App settings</a>
           <a class="btn btn-success" href="/app/build/<%=even.ename %>"><i class="icon-qrcode icon-white"></i> Build app</a>
+          <a class="btn btn-success" href="/app/get/<%=even.ename %>"><i class="icon-download icon-white"></i> Download .apk</a>
         </td>
       </div>
     </div>

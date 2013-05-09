@@ -1,43 +1,53 @@
 #!/bin/sh
 #
 # Shell script that creates an app
-# This version is only a test
 
+# Variables for the folders involved for the app generation
 folder="gen/$2"
+skeleton="gen/skeleton"
+tw="gen/twitter"
+fb="gen/twitter"
+main="gen/main"
 
-mv/gen/main/ $folder
+mv $main $folder
 sed -e s/com.deustotech.eventapp/eu.deustotech."$1"/g $folder/src/eu/deustotech/eventapp/EventAppActivity.java > $folder/src/eu/deustotech/eventapp/NewEventAppActivity.java
 rm $folder/src/eu/deustotech/eventapp/EventAppActivity.java
 mv $folder/src/eu/deustotech/eventapp/NewEventAppActivity.java $folder/src/eu/deustotech/eventapp/EventAppActivity.java
 sed -e s/com.deustotech.eventapp/eu.deustotech."$1"/g $folder/AndroidManifest.xml > $folder/NewAndroidManifest.xml
 rm $folder/AndroidManifest.xml
 mv $folder/NewAndroidManifest.xml $folder/AndroidManifest.xml
+mv $skeleton/assets/www/js/ $folder/assets/www/js/core #cordova, childbrowser, jquery, jquery mobile, etc
+mv $skeleton/assets/www/js/events.js $folder/assets/www/js/
+mv $skeleton/assets/www/js/media.js $folder/assets/www/js/
 case "$1" in 
         "a")
 		#twitter
 		echo "a"
 		
-		mv gen/skeleton/assets/www/js/core/twitter/ $folder/assets/www/js/core
-                mv gen/skeleton/assets/www/js/core/twitter/ $folder/assets/www/js/core
+		mv $skeleton/assets/www/js/core/twitter/jsOAuth-1.3.6.min.js $folder/assets/www/js/core
+                mv $skeleton/assets/www/js/core/twitter/twitter.js $folder/assets/www/js/
                 mv gen/twitter/assets/www/event.html $folder/assets/www/js/core
 
                 ;;
         "b")
 		#facebook
-		mv skeleton/assets/www/js/facebook/* gen/$2/assets/js/www/core
-                mv skeleton/src/com/facebook/android/* gen/$2/src/com/facebook/android/s
-                mv gen/twitter/assets/www/event.html $folder/assets/www/js/core
+		mv $skeleton/assets/www/js/facebook/cdv-plugin-facebook-connect.js $folder/assets/js/www/core
+                mv $skeleton/assets/www/js/facebook_js_sdk.js $folder/assets/www/js/core
+                mv $skeleton/assets/www/js/social.js $folder/assets/www/js/
+                mv $skeleton/src/com/facebook/android/* $folder/src/com/facebook/android/
+                mv gen/facebook/assets/www/event.html $folder/assets/www/js/core
                 echo "b"
                 ;;
         "c")
-		#both
-		mv skeleton/both/* gen/$2
+		#evernote
+		mv $skeleton/assets/www/js/core/evernote $folder/assets/www/js/core/evernote
+                mv $skeleton/assets/www/js/evernote.js $folder/assets/www/js
                 echo "c"
                 ;;
         *)
-        echo "Usage: script.sh [a | b | c]"
         exit
         ;;
 esac
+echo "Building app..."
 cd $folder
 ant release

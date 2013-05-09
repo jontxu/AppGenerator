@@ -87,7 +87,7 @@
   <div class="row-fluid">
   <div id="main-container" class="container">
   <div class="span1"></div>
- <form class="form-horizontal" id='signupform' action='../../edit' method="POST">
+ <form class="form-horizontal" enctype="multipart/form-data" id='signupform' action='../edit' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Creating app for <%= eventname %></legend>
@@ -126,23 +126,27 @@
   <div class="tab-pane active" id="appgeneral">
     <div class="control-group">
       <!-- Username -->
-      <label class="control-label"  for="fullname">App name</label>
+      <label class="control-label"  for="id">App name</label>
       <div class="controls">
-        <input type="text" id="fullname" name="fullname" value="" placeholder="" class="required input-xlarge">
+        <input type="text" id="id" name="id" value="<%= appli.appname %>" placeholder="" class="required input-xlarge">
       </div>
     </div>
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="email">Description:</label>
+      <label class="control-label" for="descr">Description:</label>
       <div class="controls">
-        <textarea rows="5" id="descr" name="descr" value="" placeholder="" class="required input-xlarge"></textarea>
+        <textarea rows="5" id="descr" name="descr" value="" placeholder="" class="required input-xlarge"><%= appli.description %></textarea>
         <p class="help-block">Description for the app store</p>
       </div>
     </div>
   </div>
 
   <div class="tab-pane" id="schedule">
+    <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <b>Reminder:</b> To update, click on a row, push <em>edit</em> and change the modal info, <b>but not the id</b>.
+    </div>
     <div class="control-group">
        <table class="table table-striped table-bordered" id="lectures" width="100%">
     <thead>
@@ -163,11 +167,24 @@
 
 <div class="tab-pane" id="appfiles">
     <div class="control-group">
+    <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <b>Reminder:</b> These files are critical for the system, you can upload them when you want but check that you have done it at least once.
+    </div>
       <!-- E-mail -->
-      <label class="control-label" for="logo">Logo/splash screen:</label>
+      <label class="control-label" for="logo">Logo:</label>
       <div class="controls">
         <input type="file" id="logo" name="logo" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">A .png file is preferred</p>
+        <p class="help-block">A .png file is preferred. You can go <a href="https://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html">here</a> to create it without any complications.</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="splash">Splash screen:</label>
+      <div class="controls">
+        <input type="file" id="splash" name="splash" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Go <a href="https://android-ui-utils.googlecode.com/hg/asset-studio/dist/nine-patches.html">here</a>, create the nine splash and upload the .zip. We take care of the rest.</p>
       </div>
     </div>
 
@@ -176,64 +193,68 @@
       <label class="control-label" for="css">CSS files:</label>
       <div class="controls">
         <input type="file" id="css" name="css" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Download <a href="">this file</a>, edit it and upload it</p>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="other">Other files:</label>
-      <div class="controls">
-        <input type="file" id="other" name="other" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Download <a href="">this file</a>, edit it and upload it</p>
+        <p class="help-block">Go to <a href="http://jquerymobile.com/themeroller/">jQuery themeroller</a>, choose your design and upload the css file!</p>
       </div>
     </div>
 </div>
 
 <div class="tab-pane" id="appsettings">
-    <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="ios">iOS</label>
+      <div class="control-group">
       <div class="controls">
-        <input type="checkbox" id="ios" value="">
+        <% if (appli.ios) { %>
+          <input type="checkbox" id="ios" name="ios" checked> iOS
+          <% } else { %>
+            <input type="checkbox" id="ios" name="ios"> iOS
+          <% } %>
       </div>
     </div>
 
     <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="andr">Android</label>
+      <!-- E-mail -->
       <div class="controls">
-        <input type="checkbox" id="andr" value="">
+        <% if (appli.android) { %>
+            <input type="checkbox" id="andr" name="andr" checked> Android
+          <% } else { %>
+            <input type="checkbox" id="andr" name="andr"> Android
+          <% } %>
       </div>
     </div>
 
     <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="twit">Twitter</label>
+      <!-- E-mail -->
       <div class="controls">
-        <input type="checkbox" id="twit" value="">
+        <% if (appli.twitter) { %>
+        <input type="checkbox" id="twit" name="twit" checked> Twitter
+        <% } else { %>
+          <input type="checkbox" id="twit" name="twit"> Twitter
+        <% } %>
       </div>
     </div>
 
     <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="fb">Facebook</label>
+      <!-- E-mail -->
       <div class="controls">
-        <input type="checkbox" id="fb" value="">
+        <% if (appli.facebook) { %>
+        <input type="checkbox" id="fb" name="fb" checked> Facebook
+        <% } else { %>
+          <input type="checkbox" id="fb" name="fb"> Facebook
+        <% } %>
       </div>
     </div>
-
     <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="ever">Evernote</label>
+      <!-- E-mail -->
       <div class="controls">
-        <input type="checkbox" id="ever" value="">
+         <% if (appli.evernote) { %>
+        <input type="checkbox" id="evern" name="evern" checked> Evernote
+        <% } else { %>
+          <input type="checkbox" id="evern" name="evern"> Evernote
+        <% } %>
       </div>
     </div>
   </div>
 </div>
 </div>
-    <input type="hidden" id="appid" value="<%= appid %>">
+    <input type="hidden" id="appid" name="appid" value="<%= appid %>">
     <input type="hidden" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>
