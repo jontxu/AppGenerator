@@ -38,11 +38,11 @@ app.configure(function(){
     cookie: {httpOnly: true},
     store: MemStore({reapInterval: 60000 * 10})
   }));
-  /*app.use(express.csrf());
+  app.use(express.csrf());
   app.use(function (req, res, next) {
     res.locals.token = req.session._csrf;
     next();
-  });*/
+  });
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
@@ -91,9 +91,11 @@ app.configure('development', function(){
 app.all('/event/*', requireAuth);
 app.all('/user/*', requireAuth);
 app.all('/app/*', requireAuth);
+app.all('/lectures/*', requireAuth);
 app.all('/logout/', requireAuth);
 
 app.all('/admin', requireRole("admin"));
+
 /*
  * GET parts.
  * Some pages may have gets but are actually due to redirect issues (i.e, URL).
@@ -107,7 +109,7 @@ app.get('/event/edit/:id', events.edit);
 app.get('/event/delete/:id', events.del);
 app.get('/app/settings/:id', apps.settings);
 app.get('/app/build/:id', apps.build);
-app.get('/app/get/:id', apps.download);
+app.get('/app/download/:id', apps.download);
 app.get('/user/:id', user.getuser);
 app.get('/user/edit/:id', user.userinfo);
 app.get('/user/delete/:id', user.remove);

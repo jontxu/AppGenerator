@@ -7,8 +7,19 @@
 	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
-  <% scripts.push('/javascripts/jquery-1.9.1.min.js', '/javascripts/jquery.validate.js', '/javascripts/signupform.js', '/javascripts/bootstrap.js') %>
+  <link rel='stylesheet' href='/stylesheets/bootstrap-datetimepicker.min.css' />
+  <% scripts.push('/javascripts/jquery-1.9.1.min.js', '/javascripts/jquery.validate.js', '/javascripts/signupform.js', '/javascripts/bootstrap.js', '/javascripts/bootstrap-datetimepicker.min.js') %>
   <%- renderScriptsTags(scripts) %>
+  <%- renderScriptsTags(scripts) %>
+  <script type="text/javascript">
+  $(function() {
+    $('#datetimepicker1, #datetimepicker2').datetimepicker({
+      language: 'en',
+      weekStart: 1, 
+      pickSeconds: false
+    });
+  });
+</script>
   </head>
   <body>
   <div class="navbar navbar-fixed-top navbar-inverse">
@@ -21,7 +32,7 @@
                     </a>
 
                     <!-- Your site name for the upper left corner of the site -->
-                    <a class="brand" href="/">PhoneGap events app generator</a>
+                    <a class="brand" href="/"><img src="/static/img/logo.png" width="10" /> Events app generator</a>
 
                     <!-- Start of the nav bar content -->
                     <div class="nav-collapse"><!-- Other nav bar content -->
@@ -74,22 +85,37 @@
       </div>
     </div>
 
-    <div class="control-group">
+     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="sdate">Start date:</label>
+      <label class="control-label" for="sdate">Start date: *</label>
       <div class="controls">
-        <input type="text" id="sdate" name="sdate" value="<%= even.sdate.getUTCFullYear() %>-<%= ('0' + (even.sdate.getUTCMonth() + 1)).slice(-2)%>-<%= ('0' + even.sdate.getUTCDate()).slice(-2) %> <%= ('0' + even.sdate.getHours()).slice(-2) %>:<%= ('0' + even.sdate.getMinutes()).slice(-2) %>" placeholder="" class="required input-xlarge">
+        <div id="datetimepicker1" class="input-append date">
+          <input data-format="yyyy-MM-dd hh:mm" type="text" name="sdate" value="<%= even.sdate.getUTCFullYear() %>-<%= ('0' + (even.sdate.getUTCMonth() + 1)).slice(-2)%>-<%= ('0' + even.sdate.getUTCDate()).slice(-2) %> <%= ('0' + even.sdate.getHours()).slice(-2) %>:<%= ('0' + even.sdate.getMinutes()).slice(-2) %>"></input>
+        <span class="add-on">
+          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+          </i>
+        </span>
+      </div>
+       <!--<input type="text" id="sdate"  name="sdate" value="" placeholder="" class="required input-xlarge">-->
+        <p class="help-block">Click the calendar, choose date and time.</p>
       </div>
     </div>
 
     <div class="control-group">
       <!-- E-mail -->
-      <label class="control-label" for="edate">End date:</label>
+      <label class="control-label" for="edate">End date: *</label>
       <div class="controls">
-        <input type="text" id="edate" name="edate" value="<%= even.edate.getUTCFullYear() %>-<%= ('0' + (even.edate.getUTCMonth() + 1)).slice(-2) %>-<%= ('0' + even.edate.getUTCDate()).slice(-2) %> <%= ('0' + even.edate.getHours()).slice(-2) %>:<%= ('0' + even.edate.getMinutes()).slice(-2) %>" placeholder="" class="required input-xlarge">
+         <div id="datetimepicker2" class="input-append date">
+          <input data-format="yyyy-MM-dd hh:mm" type="text" name="edate" value="<%= even.edate.getUTCFullYear() %>-<%= ('0' + (even.edate.getUTCMonth() + 1)).slice(-2) %>-<%= ('0' + even.edate.getUTCDate()).slice(-2) %> <%= ('0' + even.edate.getHours()).slice(-2) %>:<%= ('0' + even.edate.getMinutes()).slice(-2) %>"></input>
+        <span class="add-on">
+          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+          </i>
+        </span>
+      </div>
+        <!--<input type="text" id="edate" name="edate" value="" placeholder="" class="required input-xlarge">-->
+        <p class="help-block">Same behavior as before</p>
       </div>
     </div>
-
 
     <div class="control-group">
       <!-- E-mail -->
@@ -106,6 +132,7 @@
     </div>
 </div>
 </div>
+  <input type="hidden" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>
 </div>

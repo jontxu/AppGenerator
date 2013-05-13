@@ -118,6 +118,8 @@ exports.add = function(req, res) {
 	console.log(req.body.fullname);
 	var id = req.body.fullname.replace(/\s/g, "").toLowerCase(); //id is a slug for urls
 	console.log(id);
+	console.log(req.body.sdate);
+	console.log(req.body.edate);
 	eventsdb.insert(id, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.session.user, req.body.fullname, function (events) {
 		if (events) {			
 			console.log('Error inserting in database');

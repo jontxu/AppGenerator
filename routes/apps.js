@@ -110,7 +110,7 @@ exports.download = function(req, res) {
   			if (!exists) {
   				console.log("App hasn't been generated yet");
   				res.send(500);
-  			} else {
+			} else {
   				eventsdb.geteventbyname(req.params.id, function(evento) {
 					if (evento == null) {
 						console.log("error getting user");
@@ -122,7 +122,7 @@ exports.download = function(req, res) {
 								console.log(error);
 								res.send(500);
 							} else {
-								res.render('download', { title: "Download app", eventname: evento[0].fullname, image: canvas, url: path });
+								res.render('download', { title: "Download app", eventname: evento[0].fullname, image: canvas, url: path, user: req.session.user });
 							}
 						});
 					}

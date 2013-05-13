@@ -19,14 +19,14 @@
         font-weight: normal;
     }
     #dt_lectures {
-        font: 95%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+        font: 11px/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
         color: #111;
     }
-    div.dataTables_wrapper, table {
-        font: 13px/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+    div.dataTables_wrapper {
+        font: 11px/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
     }
     #dt_lectures h1 {
-        font-size: 16px !important;
+        font-size: 14px !important;
         color: #111;
     }
     #footer {
@@ -56,7 +56,7 @@
                     </a>
 
                     <!-- Your site name for the upper left corner of the site -->
-                    <a class="brand" href="/">PhoneGap events app generator</a>
+                    <a class="brand" href="/"><img src="/static/img/logo.png" width="10" /> Events app generator</a>
 
                     <!-- Start of the nav bar content -->
                     <div class="nav-collapse"><!-- Other nav bar content -->
@@ -259,6 +259,7 @@
 </div>
 </div>
     <input type="hidden" id="appid" name="appid" value="<%= appid %>">
+    <input type="hidden" id="csrf" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>
 </div>

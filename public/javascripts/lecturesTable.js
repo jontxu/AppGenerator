@@ -1,6 +1,7 @@
 var editor;
 $(document).ready(function () {
     var name = $('#appid').val();
+    var token = $('#csrf').val();
     editor = new $.fn.dataTable.Editor( {
         "ajaxUrl": {
           "create": "/lectures/new/" + name,
@@ -8,6 +9,24 @@ $(document).ready(function () {
           "remove": "/lectures/delete/" + name
         },
         "domTable": "#lectures",
+        "idSrc" : "lecname",
+        "ajax": function (method, url, data, successCallback, errorCallback) {
+            $.ajax({
+                "type": method,
+                "url":  url,
+                "data": data,
+                "dataType": "json",
+                "headers" : {
+                    'X-CSRF-Token' : token
+                },
+                "success": function (json) {
+                    successCallback( json );
+                },
+                "error": function (xhr, error, thrown) {
+                    errorCallback( xhr, error, thrown );
+                }
+            });
+        },
         "fields": [ {
                 "label": "ID:",
                 "name": "lecname"
@@ -20,10 +39,12 @@ $(document).ready(function () {
                 "default": name
             }, {
                 "label": "Starting date:",
-                "name": "sdate"
+                "name": "sdate",
+                "default" : "yyyy-MM-dd hh:mm:ss"
             }, {
                 "label": "Ending date:",
-                "name": "edate"
+                "name": "edate",
+                "default" : "yyyy-MM-dd hh:mm:ss"
             }, {
                 "label": "Lecturer/s:",
                 "name": "lecturer"

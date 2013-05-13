@@ -6,7 +6,7 @@ var is_admin;
 
 module.exports.getallevents = function(callback) {
 	var rows = [];
-	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events');
+	var query = client.query('SELECT ename, fullname, descr, sdate, edate as edate, location FROM events');
 	query.on('row', function(row) {
 		rows.push(row);
 	});
@@ -17,7 +17,7 @@ module.exports.getallevents = function(callback) {
 
 module.exports.getevent = function(username, eventname, callback) {
 	var rows = [];
-	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1 and ename = $2', [username, eventname]);
+	var query = client.query('SELECT ename, fullname, descr, sdate, edate, location FROM events where uname = $1 and ename = $2', [username, eventname]);
 	query.on('row', function(row) {
 		rows.push(row);
 	});
@@ -28,7 +28,7 @@ module.exports.getevent = function(username, eventname, callback) {
 
 module.exports.geteventbyname = function(eventname, callback) {
 	var rows = [];
-	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where ename = $1', [eventname]);
+	var query = client.query('SELECT ename, fullname, descr, sdate, edate, location FROM events where ename = $1 order by sdate', [eventname]);
 	query.on('row', function(row) {
 		rows.push(row);
 	});
@@ -39,7 +39,7 @@ module.exports.geteventbyname = function(eventname, callback) {
 
 module.exports.getuserevents = function(username, callback) {
 	var rows = [];
-	var query = client.query('SELECT ename, fullname, descr, date(sdate) as sdate, date(edate) as edate, location FROM events where uname = $1', [username]);
+	var query = client.query('SELECT ename, fullname, descr, sdate, edate, location FROM events where uname = $1 order by sdate', [username]);
 	query.on('row', function(row) {
 		rows.push(row);
 	});
@@ -49,7 +49,7 @@ module.exports.getuserevents = function(username, callback) {
 }
 module.exports.geteventname = function(username, eventname, callback) {
 	var rows = [];
-	var query = client.query('SELECT fullname FROM events where uname = $1 and ename = $2', [username, eventname]);
+	var query = client.query('SELECT fullname FROM events where uname = $1 and ename = $2 order by sdate', [username, eventname]);
 	query.on('row', function(row) {
 		rows.push(row);
 	});
