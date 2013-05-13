@@ -6,6 +6,7 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var child;
 var fs = require('fs');
+var QRCode = require('qrcode');
 
 exports.settings = function(req, res) {
 	if (req.params.id) {
@@ -84,7 +85,8 @@ exports.build = function(req, res) {
 				console.log("error getting app");
 				res.send(500);
 			} else {
-				settings = app[0]; //twitter, facebook, evernote, etc
+				settings = app[0];  //twitter, facebook, evernote, etc
+				settings.appname = settings.appname.replace(/\s/g, "");
 				// executes the script used for generating the actual mobile app
 				child = exec("sh ./script.sh ", function (error, stdout, stderr) {
   					sys.print('Output: ' + stdout);
@@ -102,37 +104,70 @@ exports.build = function(req, res) {
 }
 
 exports.download = function(req, res) {
-
+	if (req.params.id) {
+		var path = "/gen/" + req.params.id + "appname.apk";
+		fs.exists(path, function (exists) {
+  			if (!exists) {
+  				console.log("App hasn't been generated yet");
+  				res.send(500);
+  			} else {
+  				eventsdb.geteventbyname(req.params.id, function(evento) {
+					if (evento == null) {
+						console.log("error getting user");
+						res.send(500);
+					} else {
+						res.method = 'GET';
+						QRCode.draw(path, "max", function (error, canvas) {
+							if (error) {
+								console.log(error);
+								res.send(500);
+							} else {
+								res.render('download', { title: "Download app", eventname: evento[0].fullname, image: canvas, url: path });
+							}
+						});
+					}
+				});
+  			}
+		});
+	} else {
+		res.redirect('back');
+	}
 }
 
 /*
  * POST
  */
  exports.save = function(req, res) {
- 	fs.readFile(req.files.logo.path, function (err, data) {
- 		var path = "./gen/" + req.body.appid + "/splash.jpg";
-	  	fs.writeFile(path, data, function (err) {
-	  		console.log("Writing file " + path);
-  			if (err) 
-  				console.log(err);
-  		});
-	});
-	fs.readFile(req.files.css.path, function (err, data) {
-		var path = "./gen/" + req.body.appid + "/eventapp.css";
-  		fs.writeFile(path, data, function (err) {
-  			console.log("Writing file " + path);
-  			if (err) 
-  				console.log(err);
-  		});
-	});
-	fs.readFile(req.files.splash.path, function (err, data) {
-		var path = "./gen/" + req.body.appid + "/splash.";
-  		fs.writeFile(path, data, function (err) {
-  			console.log("Writing file " + path);
-  			if (err) 
-  				console.log(err);
-	  	});
-	});
+ 	if (req.files.logo) {
+ 		fs.readFile(req.files.logo.path, function (err, data) {
+ 			var path = "./gen/" + req.body.appid + "/logo.jpg";
+	  		fs.writeFile(path, data, function (err) {
+		  		console.log("Writing file " + path);
+  				if (err) 
+	  				console.log(err);
+  			});
+		});
+ 	}
+ 	if (req.files.css) {
+		fs.readFile(req.files.css.path, function (err, data) {
+			var path = "./gen/" + req.body.appid + "/eventapp.css";
+  			fs.writeFile(path, data, function (err) {
+	  			console.log("Writing file " + path);
+  				if (err) 
+	  				console.log(err);
+  			});
+		});
+	}
+	if (req.files.splash) {
+		fs.readFile(req.files.splash.path, function (err, data) {
+			var path = "./gen/" + req.body.appid + "/splash.9.png";
+  			fs.writeFile(path, data, function (err) {
+  				console.log("Writing file " + path);
+  				if (err) 
+  					console.log(err);
+	  		});
+		});
+	}
 	var twit = req.body.twit == undefined ? false : true;
 	var fb = req.body.fb == undefined ? false : true;
 	var evern = req.body.evern == undefined ? false : true;

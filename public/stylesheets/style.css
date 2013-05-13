@@ -3,6 +3,7 @@ body {
 }
 a {
   color: #00b7ff;
+  text-decoration: none;
 }
 #main-container {
   display: block;

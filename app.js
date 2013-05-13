@@ -38,11 +38,11 @@ app.configure(function(){
     cookie: {httpOnly: true},
     store: MemStore({reapInterval: 60000 * 10})
   }));
-  app.use(express.csrf());
+  /*app.use(express.csrf());
   app.use(function (req, res, next) {
     res.locals.token = req.session._csrf;
     next();
-  });
+  });*/
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
@@ -55,7 +55,7 @@ app.locals({
     	app.locals.scripts = [];
     	if (all != undefined) {
     	  	return all.map(function(script) {
-	    	    return '<script src="/javascripts/' + script + '"></script>';
+	    	    return '<script src="' + script + '"></script>';
       		}).join('\n ');
     	}
     	else {
@@ -112,7 +112,6 @@ app.get('/user/:id', user.getuser);
 app.get('/user/edit/:id', user.userinfo);
 app.get('/user/delete/:id', user.remove);
 app.get('/lectures/list/:id', lectures.getlect);
-app.get('/lectures/update/:id', lectures.save)
 app.get('/logout/', user.logout);
 app.get('/', routes.index);
 
@@ -135,6 +134,10 @@ app.post('/event/add', requireAuth, events.add);
 app.post('/event/update', requireAuth,events.update);
 app.post('/user/edit', requireAuth, user.edit);
 app.post('/app/edit', requireAuth, apps.save);
+app.post('/lectures/update/:id', lectures.save);
+app.post('/lectures/new/:id', lectures.create);
+app.post('/lectures/delete/:id', lectures.remove);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

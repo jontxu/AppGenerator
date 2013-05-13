@@ -1,18 +1,28 @@
- var editor;
+var editor;
 $(document).ready(function () {
     var name = $('#appid').val();
     editor = new $.fn.dataTable.Editor( {
-        "sAjaxDataProp" : 'lectures',
-        "ajaxUrl": "/lectures/update/" + name,
+        "ajaxUrl": {
+          "create": "/lectures/new/" + name,
+          "edit": "/lectures/update/" + name,
+          "remove": "/lectures/delete/" + name
+        },
         "domTable": "#lectures",
         "fields": [ {
+                "label": "ID:",
+                "name": "lecname"
+            }, {
                 "label": "Title:",
                 "name": "lecttitle"
+            },{
+                "label": "Event (do not change):",
+                "name": "ename",
+                "default": name
             }, {
                 "label": "Starting date:",
                 "name": "sdate"
             }, {
-                "label": "Ending date",
+                "label": "Ending date:",
                 "name": "edate"
             }, {
                 "label": "Lecturer/s:",
@@ -26,11 +36,10 @@ $(document).ready(function () {
             }
         ]
       });
-      $('#lectures').dataTable({
-        "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+    $('#lectures').dataTable({
+        "sDom": "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
         "sAjaxDataProp" : 'lectures',
         "sAjaxSource": "/lectures/list/" + name,
-        "sPaginationType": "bootstrap",
         "aoColumns": [
             { "mData": "lecttitle" },
             { "mData": "sdate" },
@@ -38,7 +47,7 @@ $(document).ready(function () {
             { "mData": "lecturer" },
             { "mData": "excerpt" },
             { "mData": "location" }
-        ] ,
+        ],
         "oTableTools": {
             "sRowSelect": "multi",
             "aButtons": [

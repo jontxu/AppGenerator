@@ -42,7 +42,7 @@
     }
 </style>
 <link rel='stylesheet' href='/stylesheets/style.css' />
-<% scripts.push('jquery.js', 'jquery.dataTables.js', 'TableTools.min.js', 'dataTables.editor.js', 'bootstrap.js', 'dataTables.bootstrap.js', 'dataTables.editor.bootstrap.js', 'lecturesTable.js') %>
+<% scripts.push('/javascripts/jquery.js', '/javascripts/jquery.json-2.4.js','/javascripts/jquery.dataTables.js', '/javascripts/TableTools.js', '/javascripts/dataTables.editor.js', '/javascripts/bootstrap.js', '/javascripts/dataTables.bootstrap.js', '/javascripts/dataTables.editor.bootstrap.js', '/javascripts/lecturesTable.js') %>
 <%- renderScriptsTags(scripts) %>
 </head>
   <body>
@@ -86,7 +86,7 @@
         </div>
   <div class="row-fluid">
   <div id="main-container" class="container">
-  <div class="span1"></div>
+  <!--<div class="span1"></div>-->
  <form class="form-horizontal" enctype="multipart/form-data" id='signupform' action='../edit' method="POST">
   <fieldset>
     <div id="legend">
@@ -124,11 +124,16 @@
 
 <div class="tab-content">
   <div class="tab-pane active" id="appgeneral">
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <b>Reminder:</b> We cannot upload to Google Play at the moment. Check <a href="https://support.google.com/googleplay/android-developer/answer/113469?hl=en">here</a> for more information.
+  </div>
     <div class="control-group">
       <!-- Username -->
       <label class="control-label"  for="id">App name</label>
       <div class="controls">
         <input type="text" id="id" name="id" value="<%= appli.appname %>" placeholder="" class="required input-xlarge">
+        <p class="help-block">How the application is going to be known in the app stores</p>
       </div>
     </div>
 
@@ -161,7 +166,6 @@
   </thead>
   </tbody>
   </table>
-  <a class="btn btn-small btn-info" onClick="addrow();" href="javascript:void(0);">Add</a> <a class="btn btn-small btn-primary" onClick="save();" href="javascript:void(0);">Save</a> 
     </div>
 </div>
 
@@ -255,7 +259,6 @@
 </div>
 </div>
     <input type="hidden" id="appid" name="appid" value="<%= appid %>">
-    <input type="hidden" name="_csrf" value="<%= token %>">
   </fieldset>
 </form>
 </div>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/style.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 	<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.min.css' />
@@ -29,12 +29,12 @@
                         
                         
 
-                        <!-- The drop down menu
+                        <!-- The drop down menu -->
                         <ul class="nav pull-right">
                             
                                 <li>
                                     <a href="">
-                                        Welcome
+                                        Welcome, <%= user %>
                                     </a>
                                 </li>
                                 <li class="divider-vertical"></li>
@@ -44,57 +44,39 @@
                                     </a>
                                 </li>
                             
-                        </ul>-->
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
   <div id="main-container" class="container">
   <div class="row-fluid">
-  <div class="span4"></div>
-  <div class="span4">
-    <form class="form-horizontal" action='login' method="POST">
-  <fieldset>
-    
-  <div class="alert alert-info">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <b>Got any bug reports?</b><br/> Drop a mail to the system administrator <a href="mailto:jon.juaristi@opendeusto.es">here</a>.
+  <div class="span3"></div>
+    <div class="span6">
+      <div id="legend">
+        <legend class="">Application generated for: <%= eventname %></legend>
+      </div>
+
+      <b>QR Code:</b>
+      <p><img src="<%= image.toDataURL() %>" align="center"/></p>
+
+      <p> If you don't know how QR Codes are scanned, you can read <a href="http://www.geeksugar.com/How-Scan-QR-Codes-11278090">this article</a> that explains it</p>
+
+      <b>Or use this download link instead:</b> 
+      <br/>
+      <a href="<%= url %>">Download</a>
+      <br/>
+      <div class="btn-toolbar">
+        <td class="span3">
+          <a class="btn btn-primary" href="javascript:history(-1);"><i class="icon-arrow-left icon-white"></i> Back</a>
+        </td>
+      </div>
+    </div>
   </div>
-    <div id="legend">
-      <legend class="">Login</legend>
-    </div>
-    <div class="control-group">
-      <!-- Username -->
-      <label class="control-label"  for="username">Username</label>
-      <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-large">
-      </div>
-    </div>
- 
-    <div class="control-group">
-      <!-- Password-->
-      <label class="control-label" for="password">Password</label>
-      <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="input-large">
-      </div>
-    </div>
- 
- 
-    <div class="control-group">
-      <!-- Button -->
-      <div class="controls">
-        <button class="btn btn-success">Login</button>
-      </div>
-    </div>
-  </fieldset>
-</form>
-Don't have an account? <a href="./register/">You may register here</a>
 </div>
-</div>
-</div>
-  </body>
-    <footer>
+<footer>
     <img id="logo-left" src="/static/img/morelab.png" width="150" />
     <img id="logo-right" src="/static/img/deustotech.png" width="150" />
   </footer>
+  </body>
 </html>

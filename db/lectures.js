@@ -5,8 +5,8 @@ client.connect();
 var is_admin;
 
 
-module.exports.add = function(ename, title, lname, sdate, edate, lect, excerpt, loc, callback) {
-	var query = client.query("INSERT INTO lectures (lecname, lecttitle, ename, sdate, edate, lecturer, excerpt, location) VALUES ($1, $2, $3, $4, $5, $6, $7)", [lname, title, ename, sdate, edate, lect, excerpt, loc], function(err) {
+module.exports.add = function(ename, lname, title, sdate, edate, lect, excerpt, loc, callback) {
+	var query = client.query("INSERT INTO lectures (lecname, lecttitle, ename, sdate, edate, lecturer, excerpt, location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [lname, title, ename, sdate, edate, lect, excerpt, loc], function(err) {
   	if (err) {
     	callback(err);
     	return;
@@ -19,7 +19,7 @@ module.exports.add = function(ename, title, lname, sdate, edate, lect, excerpt, 
 
 module.exports.get = function(lname, ename, callback) {
     var rows = [];
-    var query = client.query('SELECT lecname, lecttitle, ename, sdate, edate, lecturer, excerpt, location FROM lectures WHERE lectname = $1 AND ename = $2', [lname, ename]);
+    var query = client.query('SELECT lecname, lecttitle, ename, sdate, edate, lecturer, excerpt, location FROM lectures WHERE lecname = $1 AND ename = $2', [lname, ename]);
     query.on('row', function(row) {
 		rows.push(row);
     });
@@ -40,7 +40,7 @@ module.exports.getall = function(ename, callback) {
 }
 
 module.exports.update = function(ename, lname, title, sdate, edate, lect, excerpt, loc, callback) {
-	var query = client.query("UPDATE users SET lecttitle = $1, sdate = $2, edate = $3, lecturer = $4, excerpt = $5, location = $6 WHERE lectname = $7 AND ename = $8", [title, sdate, edate, lect, excerpt, loc, lname, ename], function(err) {
+	var query = client.query("UPDATE lectures SET lecttitle = $1, sdate = $2, edate = $3, lecturer = $4, excerpt = $5, location = $6 WHERE lecname = $7 AND ename = $8", [title, sdate, edate, lect, excerpt, loc, lname, ename], function(err) {
 		if (err) {
 			callback(err);
 			return;
@@ -51,7 +51,7 @@ module.exports.update = function(ename, lname, title, sdate, edate, lect, excerp
 	});
 }
 
-module.exports.delete = function(lname, ename, callback) {
+module.exports.remove = function(lname, ename, callback) {
 	var query = client.query('DELETE FROM lectures WHERE lecname = $1 and ename = $2', [lname, ename], function(err) {
 		if (err) {
 			callback(err);
