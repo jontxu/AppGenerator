@@ -6,8 +6,12 @@
 folder="gen/$2"
 skeleton="gen/skeleton"
 tw="gen/twitter"
-fb="gen/twitter"
+fb="gen/facebook"
 main="gen/main"
+twfb="gen/twfb"
+twev="gen/tewv"
+fbev="gen/fbev"
+
 
 mv $main $folder
 sed -e s/com.deustotech.eventapp/eu.deustotech."$1"/g $folder/src/eu/deustotech/eventapp/EventAppActivity.java > $folder/src/eu/deustotech/eventapp/NewEventAppActivity.java
@@ -23,11 +27,9 @@ case "$1" in
         "a")
 		#twitter
 		echo "a"
-		
 		mv $skeleton/assets/www/js/core/twitter/jsOAuth-1.3.6.min.js $folder/assets/www/js/core
                 mv $skeleton/assets/www/js/core/twitter/twitter.js $folder/assets/www/js/
                 mv gen/twitter/assets/www/event.html $folder/assets/www/js/core
-
                 ;;
         "b")
 		#facebook

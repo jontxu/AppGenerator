@@ -88,7 +88,7 @@ exports.build = function(req, res) {
 				settings = app[0];  //twitter, facebook, evernote, etc
 				settings.appname = settings.appname.replace(/\s/g, "");
 				// executes the script used for generating the actual mobile app
-				child = exec("sh ./script.sh ", function (error, stdout, stderr) {
+				child = exec("sh ./script.sh a", function (error, stdout, stderr) {
   					sys.print('Output: ' + stdout);
   					if (error !== null) {
 	    				console.log('exec error: ' + error);
@@ -109,7 +109,7 @@ exports.download = function(req, res) {
 		fs.exists(path, function (exists) {
   			if (!exists) {
   				console.log("App hasn't been generated yet");
-  				res.send(500);
+  				res.send(403);
 			} else {
   				eventsdb.geteventbyname(req.params.id, function(evento) {
 					if (evento == null) {

@@ -139,7 +139,7 @@ exports.add = function(req, res) {
 	    			res.send(500);
   				}
 			});
-			res.redirect('/applist/');
+			res.redirect('/');
 		}
 	});
 }
@@ -147,9 +147,9 @@ exports.add = function(req, res) {
 exports.update = function(req, res) {
 	var name = req.body.ename;
 	var id = name.replace(/\s/g, "").toLowerCase(); //id is a slug for urls
-	eventsdb.update(id, req.body.ename, req.body.descr, req.body.sdate, req.body.edate, req.body.location, function(events) {
+	eventsdb.update(id, req.body.ename, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.body.oldid, function(events) {
 		if (events == null) {
-			res.redirect('/applist/');
+			res.redirect('/');
 		} else {
 			res.redirect('/event/' + id);
 			console.log('Error inserting in database');

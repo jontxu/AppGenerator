@@ -72,8 +72,8 @@ module.exports.insert = function(name, desc, startdate, enddate, location, usern
 		}
 	});
 }
-module.exports.update = function(ename, name, desc, sdate, edate, loc, callback) {
-	var query = client.query('UPDATE EVENTS set fullname = $1, descr = $2, sdate = $3, edate = $4, location = $5 where ename = $6', [name, desc, sdate, edate, loc, ename], function(err) {
+module.exports.update = function(ename, name, desc, sdate, edate, loc, oldname, callback) {
+	var query = client.query('UPDATE EVENTS set ename = $1, fullname = $2, descr = $3, sdate = $4, edate = $5, location = $6 where ename = $7', [ename, name, desc, sdate, edate, loc, oldname], function(err) {
 		if (err) {
 			callback(err);
 			return;
