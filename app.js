@@ -67,13 +67,21 @@ app.locals({
   	}
 });
 
-var requireRole = function(role) {
+/*var requireRole = function(role) {
     return function(req, res, next) {
         if(req.session.user && req.session.role === role) 
             next();
         else 
         	res.send(403);
 	}
+};*/
+
+var requireAdmin = function(req, res, next) {
+  if (req.session.user && req.session.role === "admin") {
+    next();
+  } else {
+    res.send(403);
+  }
 };
 
 var requireAuth = function(req, res, next) {
@@ -92,9 +100,9 @@ app.all('/event/*', requireAuth);
 app.all('/user/*', requireAuth);
 app.all('/app/*', requireAuth);
 app.all('/lectures/*', requireAuth);
+app.all('/applist', requireAuth);
 app.all('/logout/', requireAuth);
-
-app.all('/admin', requireRole("admin"));
+app.all('/admin', requireAdmin);
 
 /*
  * GET parts.

@@ -4,6 +4,7 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var child;
 var fs = require('fs');
+var rmrf = require('rimraf');
 
 /*
  * GET part
@@ -76,12 +77,15 @@ exports.del = function(req, res) {
 					console.log("error deleting event");
 					res.redirect('back');
 				} else if (usererror == null) {
-					child = exec("rm -r gen/" + req.params.id + "/", function (error, stdout, stderr) {
-  						sys.print('Output: ' + stdout);
-  							if (error !== null) {
-		    					console.log('exec error: ' + error);
-				    			res.send(500);
-  						}
+					rmrf.rimraf("./gen/" + req.params.id + "/", function(error){
+    					if (!error) {
+    						console.log("File deleted successfully");
+    					} else if (error && error.code === 'ENOTEMPTY') {
+        					console.log("Folder is not empty");
+    					} else {
+	        				console.log(error);
+	        				res.send(500);
+    					}
 					});
 					console.log('deleted event ' + req.params.id);
 					res.redirect('back');
@@ -93,12 +97,15 @@ exports.del = function(req, res) {
 					console.log("error deleting event");
 					res.redirect('back');
 				} else if (usererror == null) {
-					child = exec("rm -r gen/" + req.params.id + "/", function (error, stdout, stderr) {
-  						sys.print('Output: ' + stdout);
-  							if (error !== null) {
-		    					console.log('exec error: ' + error);
-				    			res.send(500);
-  						}
+					rmrf.rimraf("./gen/" + req.params.id + "/", function(error){
+    					if (!error) {
+    						console.log("File deleted successfully");
+    					} else if (error && error.code === 'ENOTEMPTY') {
+        					console.log("Folder is not empty");
+    					} else {
+	        				console.log(error);
+	        				res.send(500);
+    					}
 					});
 					console.log('deleted event ' + req.params.id);
 					res.redirect('back');
@@ -125,19 +132,25 @@ exports.add = function(req, res) {
 			console.log('Error inserting in database');
 			res.redirect('/event/new/');
 		} else if (events == null) {
-			child = exec("mkdir gen/" + id, function (error, stdout, stderr) {
-  				sys.print('Output: ' + stdout);
-  					if (error !== null) {
-	    				console.log('exec error: ' + error);
-	    				res.send(500);
-  				}
+			fs.mkdir("./gen/" + id, function (error) {
+    			if (!error) {
+    				console.log("Folder created successfully");
+    			} else if (error && error.code === 'EEXIST') {
+        			console.log("Folder already exists");
+    			} else {
+	        		console.log(error);
+	        		res.send(500);
+    			}
 			});
-			child = exec("mkdir gen/" + id + "/assets", function (error, stdout, stderr) {
-	  			sys.print('Output: ' + stdout);
-  				if (error !== null) {
-		    		console.log('exec error: ' + error);
-	    			res.send(500);
-  				}
+			fs.mkdir("./gen/" + id  +"/assets", function (error) {
+    			if (!error) {
+    				console.log("Folder created successfully");
+    			} else if (error && error.code === 'EEXIST') {
+        			console.log("Folder already exists");
+    			} else {
+	        		console.log(error);
+	        		res.send(500);
+    			}
 			});
 			res.redirect('/');
 		}
@@ -149,9 +162,22 @@ exports.update = function(req, res) {
 	var id = name.replace(/\s/g, "").toLowerCase(); //id is a slug for urls
 	eventsdb.update(id, req.body.ename, req.body.descr, req.body.sdate, req.body.edate, req.body.location, req.body.oldid, function(events) {
 		if (events == null) {
+			if (req.body.oldid != id) {
+				fs.rename("./gen/" + req.body.oldid, "./gen/" + id, function (error) {
+    				if (!error) {
+    					console.log("Folder created successfully");
+    				} else if (error && error.code === 'EEXIST') {
+	        			console.log("Folder already exists");
+    				} else {
+		        		console.log(error);
+	        			res.send(500);
+    				}
+				});
+			}
 			res.redirect('/');
 		} else {
-			res.redirect('/event/' + id);
+			res.redirect('/event/' + req.body.oldid);
+			console.log(events);
 			console.log('Error inserting in database');
 		}
 	});

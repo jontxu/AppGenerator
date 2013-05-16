@@ -47,6 +47,7 @@ module.exports.getuserevents = function(username, callback) {
 		callback(rows);
 	});
 }
+
 module.exports.geteventname = function(username, eventname, callback) {
 	var rows = [];
 	var query = client.query('SELECT fullname FROM events where uname = $1 and ename = $2 order by sdate', [username, eventname]);

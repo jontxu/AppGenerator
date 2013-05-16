@@ -17,7 +17,10 @@
     "canvas": "*",
     "qrcode": "*",
     "helmet": "*",
-    "express-form": "0.8.0"
+    "unzip": "*",
+    "express-form": "0.8.0",
+    "rimraf": "*",
+    "excel": "*"
    },
     "devDependencies": {
       "canvas": "~0.8.1"

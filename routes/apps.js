@@ -7,6 +7,9 @@ var exec = require('child_process').exec;
 var child;
 var fs = require('fs');
 var QRCode = require('qrcode');
+var unzip = require('unzip');
+var parseXlsx = require('excel');
+//var fstream = require('fstream');
 
 exports.settings = function(req, res) {
 	if (req.params.id) {
@@ -88,16 +91,17 @@ exports.build = function(req, res) {
 				settings = app[0];  //twitter, facebook, evernote, etc
 				settings.appname = settings.appname.replace(/\s/g, "");
 				// executes the script used for generating the actual mobile app
-				child = exec("sh ./script.sh a", function (error, stdout, stderr) {
+				child = exec("sh ./script.sh " + settings.ename + " " + settings.appname + " a", function (error, stdout, stderr) {
   					sys.print('Output: ' + stdout);
   					if (error !== null) {
 	    				console.log('exec error: ' + error);
+  					} else {
+  						console.log("App has been generated, check errors"); //if something bad happens at least by now
+						res.redirect('/event/' + req.params.id);
   					}
 				});
 			}
 		});
-		console.log("App has been generated, check errors"); //if something bad happens at least by now
-		res.redirect('/event/' + req.params.id);
 	} else {
 		res.redirect('back');
 	}
@@ -105,7 +109,7 @@ exports.build = function(req, res) {
 
 exports.download = function(req, res) {
 	if (req.params.id) {
-		var path = "/gen/" + req.params.id + "appname.apk";
+		var path = "./gen/" + req.params.id + "appname.apk";
 		fs.exists(path, function (exists) {
   			if (!exists) {
   				console.log("App hasn't been generated yet");
@@ -138,35 +142,118 @@ exports.download = function(req, res) {
  * POST
  */
  exports.save = function(req, res) {
- 	if (req.files.logo) {
- 		fs.readFile(req.files.logo.path, function (err, data) {
- 			var path = "./gen/" + req.body.appid + "/logo.jpg";
-	  		fs.writeFile(path, data, function (err) {
-		  		console.log("Writing file " + path);
+ 	if (req.files.logo.name) {
+ 		var logozip = './gen/' + req.body.appid;
+ 		var logopath = "./gen/" + req.body.appid + "/" + req.files.logo.name;
+ 		fs.exists(logopath, function (exists) {
+ 			if (!exists) {
+ 				fs.open(logopath, "w+", function (err) {
+					if (err) {
+						res.send(500);
+						console.log(err);
+					} else {
+		  				console.log('File opened correctly');
+  					}
+				});
+			} else {
+				console.log("File already exists");
+			}
+		});
+		fs.readFile(req.files.logo.path, function (err, data) {
+	  		fs.writeFile(logopath, data, function (err) {
+		  		console.log("Writing file " + logopath);
   				if (err) 
 	  				console.log(err);
   			});
-		});
+  			fs.createReadStream(logopath).pipe(unzip.Extract({ path: logozip }));
+		});		
+		console.log(req.files.logo.name + " saved successfully");
  	}
- 	if (req.files.css) {
+ 	if (req.files.splash.name) {
+		var splashzip = "./gen/" + req.body.appid;
+		var splashpath = "./gen/" + req.body.appid + "/" + req.files.splash.name;
+		fs.exists(splashpath, function (exists) {
+ 			if (!exists) {
+ 				fs.open(splashpath, "w+", function (err) {
+					if (err) {
+						res.send(500);
+						console.log(err);
+					} else {
+		  				console.log('File opened correctly');
+  					}
+				});
+			} else {
+				console.log("File already exists");
+			}
+		});
+		fs.readFile(req.files.splash.path, function (err, data) {
+  			fs.writeFile(splashpath, data, function (err) {
+  				console.log("Writing file " + splashpath);
+  				if (err) 
+  					console.log("Couldn't save " + splashpath + " " + err);
+	  		});
+	  		fs.createReadStream(splashpath).pipe(unzip.Extract({ path: splashzip }));
+		});
+		console.log(req.files.splash.name + " saved successfully");
+	}
+ 	if (req.files.css.name) {
+ 		var csspath = "./gen/" + req.body.appid + "/" + req.files.css.name;
+ 		fs.exists(csspath, function (exists) {
+ 			if (!exists) {
+ 				fs.open(csspath, "w+", function (err) {
+					if (err) {
+						res.send(500);
+						console.log(err);
+					} else {
+		  				console.log('File opened correctly');
+  					}
+				});
+			} else {
+				console.log("File already exists");
+			}
+		});
 		fs.readFile(req.files.css.path, function (err, data) {
-			var path = "./gen/" + req.body.appid + "/eventapp.css";
-  			fs.writeFile(path, data, function (err) {
-	  			console.log("Writing file " + path);
+  			fs.writeFile(csspath, data, function (err) {
+	  			console.log("Writing file " + csspath);
   				if (err) 
 	  				console.log(err);
   			});
 		});
+		console.log(req.files.css.name + " saved successfully");
 	}
-	if (req.files.splash) {
-		fs.readFile(req.files.splash.path, function (err, data) {
-			var path = "./gen/" + req.body.appid + "/splash.9.png";
-  			fs.writeFile(path, data, function (err) {
-  				console.log("Writing file " + path);
+	if (req.files.xlsx.name) {
+ 		var xlsx = "./gen/" + req.body.appid + "/" + req.files.xlsx.name;
+ 		/*fs.exists(xlsx, function (exists) {
+ 			if (!exists) {
+ 				fs.open(xlsx, "w+", function (err) {
+					if (err) {
+						res.send(500);
+						console.log(err);
+					} else {
+		  				console.log('File opened correctly');
+  					}
+				});
+			} else {
+				console.log("File already exists");
+			}
+		});*/
+		fs.readFile(req.files.xlsx.path, function (err, data) {
+	  		fs.writeFile(xlsx, data, function (err) {
+		  		console.log("Writing file " + xlsx);
   				if (err) 
-  					console.log(err);
-	  		});
-		});
+	  				console.log(err);
+  			});
+  			parseXlsx(xlsx, function(err, data) {
+  				console.log("Parsing file" + xlsx);
+    			if (err) {
+    				console.log(err);
+    				res.send(500);
+    			} else {
+	    			console.log(data);
+    				console.log(data[0]);
+    			}
+			});
+		});	
 	}
 	var twit = req.body.twit == undefined ? false : true;
 	var fb = req.body.fb == undefined ? false : true;

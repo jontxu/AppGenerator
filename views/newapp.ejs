@@ -42,7 +42,7 @@
     }
 </style>
 <link rel='stylesheet' href='/stylesheets/style.css' />
-<% scripts.push('/javascripts/jquery.js', '/javascripts/jquery.json-2.4.js','/javascripts/jquery.dataTables.js', '/javascripts/TableTools.js', '/javascripts/dataTables.editor.js', '/javascripts/bootstrap.js', '/javascripts/dataTables.bootstrap.js', '/javascripts/dataTables.editor.bootstrap.js', '/javascripts/lecturesTable.js') %>
+<% scripts.push('/javascripts/jquery.js','/javascripts/jquery.dataTables.js', '/javascripts/TableTools.js', '/javascripts/dataTables.editor.js', '/javascripts/bootstrap.js', '/javascripts/dataTables.bootstrap.js', '/javascripts/dataTables.editor.bootstrap.js', '/javascripts/lecturesTable.js') %>
 <%- renderScriptsTags(scripts) %>
 </head>
   <body>
@@ -179,7 +179,7 @@
       <label class="control-label" for="logo">Logo:</label>
       <div class="controls">
         <input type="file" id="logo" name="logo" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">A .png file is preferred. You can go <a href="https://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html">here</a> to create it without any complications.</p>
+        <p class="help-block">A .zip file is preferred. You can go <a href="https://android-ui-utils.googlecode.com/hg/asset-studio/dist/icons-launcher.html">here</a> to create it without any complications.</p>
       </div>
     </div>
 
@@ -188,7 +188,7 @@
       <label class="control-label" for="splash">Splash screen:</label>
       <div class="controls">
         <input type="file" id="splash" name="splash" value="" placeholder="" class="required input-xlarge">
-        <p class="help-block">Go <a href="https://android-ui-utils.googlecode.com/hg/asset-studio/dist/nine-patches.html">here</a>, create the nine splash and upload the .zip. We take care of the rest.</p>
+        <p class="help-block">Go <a href="https://android-ui-utils.googlecode.com/hg/asset-studio/dist/nine-patches.html">here</a>, create the nine splash and upload the .9.zip. We take care of the rest.</p>
       </div>
     </div>
 
@@ -200,7 +200,16 @@
         <p class="help-block">Go to <a href="http://jquerymobile.com/themeroller/">jQuery themeroller</a>, choose your design and upload the css file!</p>
       </div>
     </div>
-</div>
+
+<div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="xlsx">Schedule (optional):</label>
+      <div class="controls">
+        <input type="file" id="xlsx" name="xlsx" value="" placeholder="" class="required input-xlarge">
+        <p class="help-block">Go <a href="/static/schedule.xlsx">here</a>, and edit it. Dates must be YYYY-mm-dd hh:mm</p>
+      </div>
+    </div>
+  </div>
 
 <div class="tab-pane" id="appsettings">
       <div class="control-group">
