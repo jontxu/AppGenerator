@@ -223,7 +223,7 @@ exports.download = function(req, res) {
 	}
 	if (req.files.xlsx.name) {
  		var xlsx = "./gen/" + req.body.appid + "/" + req.files.xlsx.name;
- 		/*fs.exists(xlsx, function (exists) {
+ 		fs.exists(xlsx, function (exists) {
  			if (!exists) {
  				fs.open(xlsx, "w+", function (err) {
 					if (err) {
@@ -236,24 +236,32 @@ exports.download = function(req, res) {
 			} else {
 				console.log("File already exists");
 			}
-		});*/
+		});
 		fs.readFile(req.files.xlsx.path, function (err, data) {
 	  		fs.writeFile(xlsx, data, function (err) {
 		  		console.log("Writing file " + xlsx);
   				if (err) 
 	  				console.log(err);
   			});
-  			parseXlsx(xlsx, function(err, data) {
-  				console.log("Parsing file" + xlsx);
-    			if (err) {
-    				console.log(err);
-    				res.send(500);
-    			} else {
-	    			console.log(data);
-    				console.log(data[0]);
-    			}
-			});
 		});	
+		parseXlsx(xlsx, function (data) {
+  			console.log("Parsing file " + xlsx);
+  			if (data == null) {
+  				console.log("No data found");
+  			} else {
+    			for (var i = 1; i < data.length; i++) {
+    				lecturesdb.add(req.params.appid, data[i][0], data[i][1], data[i][2] + " " data[i][3], data[i][4] + " " data[i][5], data[i][6], data[i][7], data[i][8], function (lect) {
+    					if (lect = null) {
+    						console.log("lecture added successfully");
+    					} else {
+    						console.log("There has been an error");
+    						break;
+    					}
+    				});
+    			}
+    			console.log("Success!");
+    		}
+		});
 	}
 	var twit = req.body.twit == undefined ? false : true;
 	var fb = req.body.fb == undefined ? false : true;
@@ -262,7 +270,7 @@ exports.download = function(req, res) {
 	var andr = req.body.andr == undefined ? false : true;
 	appsdb.update(req.body.id, req.body.descr, twit, fb, ios, andr, evern, req.body.appid, req.body.appid, function (appl) {
 		if (appl == null) {
-			res.redirect('back');
+			res.redirect('/event/' + req.body.appid);
 		} else {
 			console.log("error saving application settings");
 			res.redirect('back');

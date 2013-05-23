@@ -21,6 +21,8 @@
     "express-form": "0.8.0",
     "rimraf": "*",
     "excel": "*"
+    "libxmljs": *,
+    "bindings" *
    },
     "devDependencies": {
       "canvas": "~0.8.1"
