@@ -4,7 +4,7 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var child;
 var fs = require('fs');
-var rmrf = require('rimraf');
+var fse = require('fs.extra');
 
 /*
  * GET part
@@ -77,7 +77,7 @@ exports.del = function(req, res) {
 					console.log("error deleting event");
 					res.redirect('back');
 				} else if (usererror == null) {
-					rmrf.rimraf("./gen/" + req.params.id + "/", function(error){
+					fse.rmrf("./gen/" + req.params.id, function(error){
     					if (!error) {
     						console.log("File deleted successfully");
     					} else if (error && error.code === 'ENOTEMPTY') {
@@ -97,7 +97,7 @@ exports.del = function(req, res) {
 					console.log("error deleting event");
 					res.redirect('back');
 				} else if (usererror == null) {
-					rmrf.rimraf("./gen/" + req.params.id + "/", function(error){
+					fse.rmrf("./gen/" + req.params.id, function(error) {
     					if (!error) {
     						console.log("File deleted successfully");
     					} else if (error && error.code === 'ENOTEMPTY') {
@@ -142,7 +142,7 @@ exports.add = function(req, res) {
 	        		res.send(500);
     			}
 			});
-			fs.mkdir("./gen/" + id  +"/assets", function (error) {
+			fs.mkdir("./gen/" + id + "/assets", function (error) {
     			if (!error) {
     				console.log("Folder created successfully");
     			} else if (error && error.code === 'EEXIST') {

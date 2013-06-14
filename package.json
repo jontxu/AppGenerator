@@ -1,10 +1,10 @@
 {
   "name": "application-name",
   "version": "0.0.1",
-   "engines": {
+  "engines": {
     "node": "0.8.21",
-    "npm":  "1.2.12"
-    },
+    "npm": "1.2.12"
+  },
   "private": true,
   "scripts": {
     "start": "node app"
@@ -20,11 +20,12 @@
     "unzip": "*",
     "express-form": "0.8.0",
     "rimraf": "*",
-    "excel": "*"
-    "libxmljs": *,
-    "bindings" *
-   },
-    "devDependencies": {
-      "canvas": "~0.8.1"
-   }
+    "excel": "*",
+    "libxmljs": "*",
+    "bindings": "*",
+    "fs.extra": "*"
+  },
+  "devDependencies": {
+    "canvas": "~0.8.1"
+  }
 }
